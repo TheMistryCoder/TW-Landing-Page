@@ -1,39 +1,32 @@
-/* @keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: scale(0.9);
-	}
-	to {
-		opacity: 1;
-		transform: scale(1);
-	}
+/* ============ Animations (currently disabled) ============ */
+/*
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
 }
-.animate-fade-in {
-	animation: fadeIn 0.25s ease-out;
-}
+.animate-fade-in { animation: fadeIn 0.25s ease-out; }
 .icon-transition {
-	font-size: 1.25rem;
-	transition: transform 0.2s ease, opacity 0.2s ease;
-	animation: fadeIn 0.25s ease-out;
-	opacity: 1;
-	transform: scale(1);
-} */
-
-/* a {
-	transition: none !important;
-} */
+  font-size: 1.25rem;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  animation: fadeIn 0.25s ease-out;
+  opacity: 1;
+  transform: scale(1);
+}
+*/
 
 /* Global scroll offset for anchor links */
 html {
-	scroll-padding-top: 5rem; /* adjust to match navbar height */
-}
+	scroll-padding-top: 5rem;
+} /* adjust to match navbar height */
 
+/* Tailwind layers */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ============ COMPONENTS (light, layout-first utilities) ============ */
 @layer components {
-	/* Section wrappers */
+	/* Basic section wrappers used across the page */
 	.section {
 		@apply relative;
 	}
@@ -44,45 +37,21 @@ html {
 		@apply max-w-7xl mx-auto;
 	}
 
+	/* Benefits block (structure only, colours are tokenised later) */
 	.tw-benefit-item {
 		@apply flex items-start gap-4;
 	}
-
 	.tw-benefit-icon {
-		/* @apply w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 bg-slate-700 text-white shadow-lg; */
 		@apply w-12 h-12 mb-6 flex items-center justify-center rounded-lg flex-shrink-0 bg-slate-700 text-white shadow-lg;
 	}
-
 	.tw-benefit-title {
 		@apply text-lg font-semibold;
 	}
-
 	.tw-benefit-text {
 		@apply leading-relaxed;
 	}
 
-	@layer utilities {
-		/* ===== Section: Light Gradient ===== */
-		.section-light-gradient {
-			@apply bg-gradient-to-br from-slate-50 to-slate-100;
-		}
-
-		/* Dark override: remove gradient, then set colour */
-		.dark .section-light-gradient {
-			@apply bg-none bg-[#a3b0b0];
-		}
-
-		/* ===== Section: Light Solid ===== */
-		.section-light-solid {
-			@apply bg-solid; /* #FAF9F6 */
-		}
-
-		.dark .section-light-solid {
-			@apply bg-slate-800;
-		}
-	}
-
-	/* Section header */
+	/* Section header primitives */
 	.section-badge {
 		@apply inline-flex items-center bg-slate-200 text-slate-800 text-sm font-medium px-4 py-1.5 rounded-full shadow-lg;
 	}
@@ -93,7 +62,7 @@ html {
 		@apply mt-4 text-slate-600 dark:text-slate-800 max-w-2xl mx-auto;
 	}
 
-	/* Feature grid and cards */
+	/* Feature grid and cards (structure only) */
 	.feature-grid {
 		@apply grid grid-cols-1 md:grid-cols-3 gap-12;
 	}
@@ -106,9 +75,6 @@ html {
 	.feature-heading {
 		@apply text-5xl font-extrabold;
 	}
-	.text-gradient-slate {
-		@apply text-transparent bg-clip-text bg-gradient-to-r from-slate-800 to-slate-500 dark:text-slate-800;
-	}
 	.feature-subtitle {
 		@apply mt-6 text-2xl font-medium text-slate-700 dark:text-slate-800;
 	}
@@ -116,32 +82,52 @@ html {
 		@apply mt-2 text-slate-500 dark:text-slate-800 text-sm max-w-xs;
 	}
 
-	/* Links */
-	.nav-link {
-		@apply text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 ease-in-out;
+	/* Legacy text gradient utility used by Features titles */
+	.text-gradient-slate {
+		@apply text-transparent bg-clip-text bg-gradient-to-r from-slate-800 to-slate-500 dark:text-slate-800;
 	}
+
+	/* Text links (structural, theme colouring handled later) */
 	.text-link {
-		@apply text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-150 ease-in-out;
+		@apply underline transition-colors duration-150 ease-in-out;
 	}
 }
 
+/* ============ UTILITIES (legacy section backgrounds kept for now) ============ */
 @layer utilities {
-	.nav-link {
-		@apply hover:text-slate-500;
+	/* ===== Section: Light Gradient (legacy) ===== */
+	.section-light-gradient {
+		@apply bg-gradient-to-br from-slate-50 to-slate-100;
+	}
+	.dark .section-light-gradient {
+		@apply bg-none bg-[#a3b0b0];
 	}
 
+	/* ===== Section: Light Solid (legacy) ===== */
+	.section-light-solid {
+		@apply bg-solid;
+	} /* #FAF9F6 */
+	.dark .section-light-solid {
+		@apply bg-slate-800;
+	}
+
+	/* Small extras */
+	.nav-link:hover {
+		@apply hover:text-slate-500;
+	}
 	.nav-logo-accent {
 		@apply text-slate-500 dark:text-slate-300;
 	}
 }
 
+/* ============ PAGE STRUCTURE OUTSIDE TAILWIND LAYERS ============ */
 body.overflow-hidden {
 	position: relative;
 	height: 100vh;
 	overflow: hidden;
 }
 
-/* === Hamburger Menu Animation === */
+/* Hamburger button */
 .c-hamburger {
 	position: relative;
 	display: block;
@@ -149,7 +135,6 @@ body.overflow-hidden {
 	height: 20px;
 	cursor: pointer;
 }
-
 .c-hamburger span,
 .c-hamburger span::before,
 .c-hamburger span::after {
@@ -161,32 +146,25 @@ body.overflow-hidden {
 	transition: all 0.3s ease-in-out;
 	border-radius: 1px;
 }
-
 .c-hamburger span {
 	top: 50%;
 	transform: translateY(-50%);
 }
-
 .c-hamburger span::before {
 	content: "";
 	top: -8px;
 }
-
 .c-hamburger span::after {
 	content: "";
 	bottom: -8px;
 }
-
-/* === Active X === */
 .c-hamburger.is-active span {
 	background-color: transparent;
 }
-
 .c-hamburger.is-active span::before {
 	top: 0;
 	transform: rotate(45deg);
 }
-
 .c-hamburger.is-active span::after {
 	bottom: 0;
 	transform: rotate(-45deg);
@@ -194,7 +172,7 @@ body.overflow-hidden {
 
 /* ============ THEME + PRIMITIVES (single source of truth) ============ */
 @layer components {
-	/* Theme-mapped helpers (Tailwind names only, easy to edit) */
+	/* Theme-mapped surfaces and content */
 	:root[data-theme="light"] .tw-bg {
 		@apply bg-white;
 	}
@@ -220,9 +198,8 @@ body.overflow-hidden {
 		@apply text-slate-900;
 	}
 	:root[data-theme="dark"] .tw-content {
-		/* @apply text-white; */
 		color: #a6adbb;
-	}
+	} /* chosen dev colour */
 
 	:root[data-theme="light"] .tw-muted {
 		@apply text-slate-500;
@@ -231,6 +208,7 @@ body.overflow-hidden {
 		@apply text-slate-400;
 	}
 
+	/* Stray class kept for now, removed during cleanup */
 	:root[data-theme="light"] .tw-ƒ {
 		@apply border-slate-200;
 	}
@@ -239,7 +217,24 @@ body.overflow-hidden {
 		@apply border-zinc-900;
 	}
 
-	/* Section primitives */
+	/* ===== Readable token aliases (no visual change) ===== */
+	.token-content {
+		@apply tw-content;
+	} /* main text colour */
+	.token-muted {
+		@apply tw-muted;
+	} /* secondary text */
+	.token-icon-tile {
+		@apply tw-icon-tile;
+	} /* icon tile surface */
+
+	/* Helper: any wrapped SVG inherits current colour */
+	.icon-uses-current svg {
+		stroke: currentColor;
+		fill: none;
+	}
+
+	/* ===== Section primitives ===== */
 	.tw-section {
 		@apply tw-bg tw-content;
 	}
@@ -273,14 +268,13 @@ body.overflow-hidden {
 		@apply p-0;
 	}
 
-	/* Icons — consistent size + perfect centering in tile */
+	/* Icons — consistent size + perfect centring in tile */
 	.tw-icon {
 		@apply w-6 h-6 block;
 	}
-
 	.tw-icon-tile {
 		@apply w-12 h-12 mb-6 grid place-items-center rounded-lg shadow-lg;
-		line-height: 0; /* prevents baseline jitter */
+		line-height: 0;
 	}
 	:root[data-theme="light"] .tw-icon-tile {
 		@apply bg-slate-700 text-white;
@@ -289,7 +283,7 @@ body.overflow-hidden {
 		@apply bg-slate-600 text-white;
 	}
 
-	/* Features scope */
+	/* ===== Features scope ===== */
 	:root[data-theme="light"] .section-features {
 		@apply bg-gradient-to-br from-zinc-50 to-purple-50;
 	}
@@ -297,8 +291,9 @@ body.overflow-hidden {
 		@apply bg-none bg-surfaceDeep;
 	}
 
+	/* Make Feature icons use the shared tile and adopt currentColor */
 	.section-features .feature-icon {
-		@apply tw-icon-tile mx-auto;
+		@apply tw-icon-tile mx-auto token-content;
 	}
 	.section-features .feature-icon svg {
 		stroke: currentColor;
@@ -327,7 +322,7 @@ body.overflow-hidden {
 		display: inline;
 	}
 
-	/* Nav links */
+	/* Nav links with theme awareness and accessible focus */
 	.nav-link {
 		color: rgb(15 23 42 / 0.8);
 		transition: color 150ms;
@@ -350,4 +345,10 @@ body.overflow-hidden {
 	:root[data-theme="dark"] .nav-link:focus-visible {
 		outline-color: theme(colors.slate.600);
 	}
+}
+
+/* Helper for any icon wrapper anywhere */
+.icon-uses-current svg {
+	stroke: currentColor;
+	fill: none;
 }
