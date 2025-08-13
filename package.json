@@ -1,0 +1,18 @@
+{
+  "name": "trafford-waters-landing-page",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+  "dev": "BROWSERSLIST_IGNORE_OLD_DATA=1 pnpm run watch",
+  "watch": "pnpm exec tailwindcss --input ./src/input.css --output ./dist/output.css --watch --verbose",
+  "build": "pnpm exec tailwindcss -i ./src/input.css -o ./dist/output.css"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
+  }
+}
