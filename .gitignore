@@ -14,4 +14,17 @@ yarn-error.log*
 .DS_Store
 
 # Zip archives
-*.zip
+*.zip# OS
+.DS_Store
+
+# Build outputs
+node_modules/
+dist/
+
+# Logs
+*.log
+
+# Backups
+*.bk
+*.bak
+*.tmp

@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth" data-theme="light">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<title>X1 Trafford Waters</title>
 
 		<!-- Preload hero banner -->
@@ -20,7 +22,7 @@
 		<div id="top" class="sr-only" aria-hidden="true"></div>
 
 		<!-- 🌙 NAVBAR -->
-		<header class="fixed top-0 left-0 w-full py-2 tw-surface-glass tw-content border-b tw-border shadow z-50 backdrop-blur">
+		<header class="fixed top-0 left-0 w-full py-2 glass-primary text-primary border-b border-primary shadow z-50 backdrop-blur">
 			<div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
 				<!-- Logo -->
 				<a href="#top" class="flex items-center gap-2" aria-label="X1 Developments, go to top">
@@ -31,8 +33,8 @@
 				</a>
 
 				<!-- Desktop Nav Links -->
-				<nav class="hidden lg:flex space-x-8 items-center text-sm font-medium">
-					<a href="#top" class="nav-link">Home</a>
+				<nav class="hidden lg:flex space-x-8 items-center text-sm font-medium" role="navigation" aria-label="Primary">
+					<a href="#top" class="nav-link" aria-current="page">Home</a>
 					<a href="#features" class="nav-link">Features</a>
 					<a href="#benefits" class="nav-link">Benefits</a>
 					<a href="#gallery" class="nav-link">Gallery</a>
@@ -41,9 +43,22 @@
 					<a href="#contact" class="nav-link">Contact</a>
 
 					<!-- Theme Toggle Button -->
-					<button id="theme-toggle" class="ml-4 text-xl transition-transform duration-300 ease-in-out">
+					<!-- <button id="theme-toggle" type="button" class="ml-4 text-xl transition-transform duration-300 ease-in-out" aria-label="Toggle theme">
 						<span id="theme-icon"></span>
-					</button>
+					</button> -->
+
+					<label class="swap swap-rotate group text-xl" aria-label="Toggle theme">
+						<input id="theme-checkbox" type="checkbox" />
+						<!-- Sun icon (shows when dark is active) -->
+						<svg class="swap-on h-6 w-6 fill-current text-yellow-300/40 transition-colors group-hover:text-yellow-300 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Z" />
+						</svg>
+
+						<!-- Moon icon (shows when light is active) -->
+						<svg class="swap-off h-6 w-6 fill-current text-slate-900/40 transition-colors group-hover:text-slate-900 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
+						</svg>
+					</label>
 				</nav>
 
 				<!-- Contact Button -->
@@ -52,7 +67,7 @@
 				</div> -->
 
 				<!-- Mobile menu toggle -->
-				<button id="mobile-menu-toggle" class="lg:hidden w-8 h-8 relative z-50 focus:outline-none c-hamburger c-hamburger--htx tw-content" ...>
+				<button id="mobile-menu-toggle" type="button" class="lg:hidden w-8 h-8 relative z-50 focus:outline-none c-hamburger c-hamburger--htx text-primary" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
 					<span class="sr-only">Toggle menu</span>
 					<span></span>
 				</button>
@@ -62,7 +77,7 @@
 		<!-- Placeholder for next section -->
 		<main>
 			<!-- Hero goes here next -->
-			<section id="hero" class="relative w-full bg-cover bg-center bg-no-repeat text-white" style="background-image: url('/images/x1-trafford-waters-banner.jpeg')" aria-label="X1 Trafford Waters hero section showing riverside apartments">
+			<section id="hero" class="relative w-full bg-cover bg-center bg-no-repeat text-white" style="background-image: url('images/x1-trafford-waters-banner.jpeg')" aria-label="X1 Trafford Waters hero section showing riverside apartments">
 				<!-- Overlay layered dark + gradient -->
 				<div class="absolute inset-0">
 					<!-- Base dark tint -->
@@ -77,18 +92,18 @@
 					<div class="space-y-6">
 						<div class="inline-flex items-center bg-white/10 text-slate-300 px-4 py-2 rounded-full text-sm font-medium border border-white/20">
 							<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-								<title>Features</title>
+								<title>Exclusive Offer</title>
 								<path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
 							</svg>
 							Exclusive Ultra-High Net Worth Opportunity
 						</div>
 
 						<h1 class="text-4xl lg:text-6xl font-bold leading-tight">
-							X1 Trafford Waters –
+							X1 Trafford Waters
 							<span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400"> Earn 16% Returns </span>
 						</h1>
 
-						<p class="text-lg text-slate-200 font-light">Prices from £198,825 – Exclusive direct developer access</p>
+						<p class="text-lg text-slate-100 font-light">Prices from £198,825 – Direct from the developer.</p>
 
 						<!-- <a href="#contact" class="inline-flex items-center bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-orange-400 hover:to-yellow-400 text-slate-900 font-bold py-3 px-6 rounded-lg shadow-md transition hover:-translate-y-1">
 							Secure Your Investment
@@ -97,7 +112,7 @@
 						<!-- Feature Cards (Updated Minimalist Version) -->
 						<div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6">
 							<!-- Card 1 -->
-							<div class="rounded-xl p-5 bg-green-400/10 border border-white/30 text-white backdrop-blur-sm">
+							<div class="rounded-xl p-5 bg-green-400/20 border border-white/30 text-white backdrop-blur-sm">
 								<!-- Dot in top right -->
 								<div class="absolute top-2 right-2 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
 								<div class="flex items-start gap-4">
@@ -114,7 +129,7 @@
 							</div>
 
 							<!-- Card 2 -->
-							<div class="rounded-xl p-5 bg-blue-400/10 border border-white/30 text-white backdrop-blur-sm">
+							<div class="rounded-xl p-5 bg-blue-400/20 border border-white/30 text-white backdrop-blur-sm">
 								<!-- Dot in top right -->
 								<div class="absolute top-2 right-2 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
 								<div class="flex items-start gap-4">
@@ -131,7 +146,7 @@
 							</div>
 
 							<!-- Card 3 -->
-							<div class="rounded-xl p-5 bg-yellow-400/10 border border-white/30 text-white backdrop-blur-sm">
+							<div class="rounded-xl p-5 bg-yellow-400/20 border border-white/30 text-white backdrop-blur-sm">
 								<!-- Dot in top right -->
 								<div class="absolute top-2 right-2 w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
 								<div class="flex items-start gap-4">
@@ -147,7 +162,7 @@
 								</div>
 							</div>
 							<!-- Card 4 -->
-							<div class="rounded-xl p-5 bg-purple-400/10 border border-white/30 text-white backdrop-blur-sm">
+							<div class="rounded-xl p-5 bg-purple-400/20 border border-white/30 text-white backdrop-blur-sm">
 								<!-- Dot in top right -->
 								<div class="absolute top-2 right-2 w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
 								<div class="flex items-start gap-4">
@@ -169,28 +184,31 @@
 					<!-- Container controls alignment -->
 					<div class="w-full flex justify-center lg:justify-end">
 						<!-- Form card -->
-						<div class="w-full max-w-md bg-white/10 border border-white/20 rounded-2xl p-8 shadow-xl backdrop-blur-md">
+						<div class="w-full max-w-md bg-slate-800/40 border border-white/40 rounded-2xl p-8 shadow-xl backdrop-blur-md">
 							<div class="text-center mb-6">
-								<div class="inline-flex items-center bg-white/20 text-white px-3 py-1 rounded-full text-xs font-medium border border-white/30 mb-3">
-									<i class="fa-solid fa-crown mr-1 text-yellow-300"></i>
-									Exclusive Access
+								<div class="inline-flex items-center bg-slate-900/50 text-yellow-400 px-5 py-2 rounded-full text-sm font-light border border-white/50 mb-4">
+									<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+										<title>Exclusive Offer</title>
+										<path stroke-linecap="round" class="text-yellow-400" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+									</svg>
+									Get Access Today!
 								</div>
 								<h3 class="text-xl font-bold mb-1">Start Your Investment Journey</h3>
-								<p class="text-slate-300 text-sm">Get exclusive access to pricing and floor plans</p>
+								<p class="text-slate-100 text-base my-1">Get exclusive access to pricing and floor plans</p>
 							</div>
 
 							<form class="space-y-4">
 								<div>
 									<label for="name" class="block text-sm text-slate-200 mb-1">Full Name</label>
-									<input type="text" id="name" placeholder="Your name" class="w-full px-4 py-2 rounded-md bg-white/10 text-white placeholder-slate-300 border border-white/30 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
+									<input type="text" id="name" placeholder="Your name" class="w-full px-4 py-2 font-light rounded-md bg-white/10 text-white placeholder-slate-300 border border-white/30 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
 								</div>
 								<div>
 									<label for="email" class="block text-sm text-slate-200 mb-1">Email</label>
-									<input type="email" id="email" placeholder="Your email" class="w-full px-4 py-2 rounded-md bg-white/10 text-white placeholder-slate-300 border border-white/30 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
+									<input type="email" id="email" placeholder="Your email" class="w-full px-4 py-2 font-light rounded-md bg-white/10 text-white placeholder-slate-300 border border-white/30 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
 								</div>
 								<div>
 									<label for="phone" class="block text-sm text-slate-200 mb-1">Phone</label>
-									<input type="tel" id="phone" placeholder="Your phone" class="w-full px-4 py-2 rounded-md bg-white/10 text-white placeholder-slate-300 border border-white/30 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
+									<input type="tel" id="phone" placeholder="Your phone" class="w-full px-4 py-2 font-light rounded-md bg-white/10 text-white placeholder-slate-300 border border-white/30 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
 								</div>
 								<button type="submit" class="w-full bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-orange-400 hover:to-yellow-400 text-slate-900 font-bold py-3 rounded-md mt-4 shadow-md transition hover:-translate-y-1">Get Started Today</button>
 							</form>
@@ -209,190 +227,11 @@
 					</div>
 				</div>
 			</section>
-
-			<!-- Features Section -->
-			<section id="features" class="section section-pad section-features">
-				<div class="section-container text-center">
-					<!-- Section Heading -->
-					<div class="mb-12 tw-section-header">
-						<div class="section-badge">
-							<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-								<title>Features</title>
-								<path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
-							</svg>
-							Core Investment Features
-						</div>
-
-						<h2 class="section-title">Designed for Long-Term Performance</h2>
-						<p class="section-subtitle">Explore the strategic advantages that make X1 Trafford Waters a stand-out opportunity for forward-thinking investors.</p>
-					</div>
-
-					<!-- Feature Grid -->
-					<!-- <div class="feature-grid"> -->
-					<div class="feature-grid tw-grid-3">
-						<!-- Feature 1 -->
-						<div class="feature tw-card">
-							<div class="tw-card-body">
-								<div class="feature-icon">
-									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="tw-icon">
-										<path stroke-linecap="round" stroke-linejoin="round" d="M14.121 7.629A3 3 0 0 0 9.017 9.43c-.023.212-.002.425.028.636l.506 3.541a4.5 4.5 0 0 1-.43 2.65L9 16.5l1.539-.513a2.25 2.25 0 0 1 1.422 0l.655.218a2.25 2.25 0 0 0 1.718-.122L15 15.75M8.25 12H12m9 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-									</svg>
-								</div>
-
-								<h3 class="feature-heading">
-									<span class="text-gradient-slate">25% Deposit</span>
-								</h3>
-
-								<p class="feature-subtitle tw-content">Secure Your Unit</p>
-
-								<p class="feature-body tw-muted">Take control of your investment with just 25% due on exchange, enabling smarter capital deployment and portfolio growth.</p>
-							</div>
-						</div>
-
-						<!-- Feature 2 -->
-						<div class="feature tw-card">
-							<div class="tw-card-body">
-								<div class="feature-icon">
-									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="tw-icon">
-										<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
-									</svg>
-								</div>
-
-								<h3 class="feature-heading">
-									<span class="text-gradient-slate">6% NET</span>
-								</h3>
-
-								<p class="feature-subtitle tw-content">Rental Guarantee</p>
-
-								<p class="feature-body tw-muted">Benefit from a fully managed rental scheme with guaranteed 6% NET returns, regardless of occupancy.</p>
-							</div>
-						</div>
-						<!-- Feature 3 -->
-						<div class="feature tw-card">
-							<div class="tw-card-body">
-								<div class="feature-icon">
-									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="tw-icon">
-										<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
-									</svg>
-								</div>
-
-								<h3 class="feature-heading">
-									<span class="text-gradient-slate">5% Rise</span>
-								</h3>
-
-								<p class="feature-subtitle tw-content">Capital Growth</p>
-
-								<p class="feature-body tw-muted">Manchester property prices are forecast to grow 5% annually, driven by sustained demand and riverside regeneration.</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<!-- Benefits Section -->
-			<!-- <section id="benefits" class="section section-light-solid section-pad"> -->
-			<section id="benefits" class="section tw-section section-pad section-benefits">
-				<div class="section-container text-center">
-					<div class="mb-12">
-						<div class="section-badge">
-							<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 text-slate-900" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-								<path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
-							</svg>
-							Benefits
-						</div>
-						<h2 class="section-title">Why So Many Investors Choose X1 Trafford Waters</h2>
-						<p class="section-subtitle">Explore the strategic advantages that make X1 Trafford Waters a stand-out opportunity for forward-thinking investors.</p>
-					</div>
-
-					<!-- Benefits grid -->
-					<div class="mx-auto max-w-7xl text-left">
-						<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-10">
-							<!-- 1 -->
-							<div id="benefit-1" class="tw-benefit-item">
-								<div class="tw-benefit-icon">
-									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" aria-hidden="true">
-										<path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-									</svg>
-								</div>
-								<div>
-									<h3 class="tw-benefit-title">Prime Location</h3>
-									<p class="tw-benefit-text">Situated in the thriving Trafford Waters development with excellent connectivity to Manchester city center.</p>
-								</div>
-							</div>
-
-							<!-- 2 -->
-							<div id="benefit-2" class="tw-benefit-item">
-								<div class="tw-benefit-icon">
-									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" aria-hidden="true">
-										<path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-									</svg>
-								</div>
-								<div>
-									<h3 class="tw-benefit-title">High ROI</h3>
-									<p class="tw-benefit-text">Exceptional return on investment with projected 16% rental growth and strong capital appreciation.</p>
-								</div>
-							</div>
-
-							<!-- 3 -->
-							<div id="benefit-3" class="tw-benefit-item">
-								<div class="tw-benefit-icon">
-									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" aria-hidden="true">
-										<path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-									</svg>
-								</div>
-								<div>
-									<h3 class="tw-benefit-title">Turnkey Solution</h3>
-									<p class="tw-benefit-text">Fully managed investment with professional property management services included.</p>
-								</div>
-							</div>
-
-							<!-- 4 -->
-							<div id="benefit-4" class="tw-benefit-item">
-								<div class="tw-benefit-icon">
-									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" aria-hidden="true">
-										<path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-									</svg>
-								</div>
-								<div>
-									<h3 class="tw-benefit-title">Secure Investment</h3>
-									<p class="tw-benefit-text">All investments are protected with appropriate legal safeguards and insurance options.</p>
-								</div>
-							</div>
-
-							<!-- 5 -->
-							<div id="benefit-5" class="tw-benefit-item">
-								<div class="tw-benefit-icon">
-									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" aria-hidden="true">
-										<path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-									</svg>
-								</div>
-								<div>
-									<h3 class="tw-benefit-title">Premium Quality</h3>
-									<p class="tw-benefit-text">High-specification finishes and modern amenities that attract premium tenants.</p>
-								</div>
-							</div>
-
-							<!-- 6 -->
-							<div id="benefit-6" class="tw-benefit-item">
-								<div class="tw-benefit-icon">
-									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" aria-hidden="true">
-										<path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-									</svg>
-								</div>
-								<div>
-									<h3 class="tw-benefit-title">Growing Market</h3>
-									<p class="tw-benefit-text">Manchester's property market continues to outperform most UK cities with strong growth forecasts.</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
 		</main>
 
 		<!-- Mobile Slide-out Menu -->
-		<div id="mobile-menu" class="fixed top-0 right-0 h-full w-64 tw-surface-glass tw-content border-l tw-border shadow-lg backdrop-blur transform translate-x-full transition-transform duration-300 z-40 lg:hidden">
-			<div class="flex flex-col p-6 space-y-4 text-sm font-medium text-slate-900 dark:text-white">
+		<div id="mobile-menu" class="fixed top-0 right-0 h-full w-64 glass-primary text-primary border-l border-primary shadow-lg backdrop-blur transform translate-x-full transition-transform duration-300 z-40 lg:hidden">
+			<div class="flex flex-col p-6 space-y-4 text-sm font-medium dark:text-white">
 				<a href="#top" class="nav-link">Home</a>
 				<a href="#features" class="nav-link">Features</a>
 				<a href="#benefits" class="nav-link">Benefits</a>
@@ -418,6 +257,6 @@
 			</svg>
 		</template>
 
-		<script src="scripts/theme-toggle.js"></script>
+		<script src="scripts/theme-toggle.js" defer></script>
 	</body>
 </html>

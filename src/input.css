@@ -1,132 +1,207 @@
-/* ============ Animations (currently disabled) ============ */
-/*
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to   { opacity: 1; transform: scale(1); }
-}
-.animate-fade-in { animation: fadeIn 0.25s ease-out; }
-.icon-transition {
-  font-size: 1.25rem;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-  animation: fadeIn 0.25s ease-out;
-  opacity: 1;
-  transform: scale(1);
-}
-*/
-
-/* Global scroll offset for anchor links */
+/* Global scroll offset for anchor links under fixed header */
 html {
 	scroll-padding-top: 5rem;
-} /* adjust to match navbar height */
+}
 
-/* Tailwind layers */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ============ COMPONENTS (light, layout-first utilities) ============ */
+/* ===================== COMPONENTS ===================== */
 @layer components {
-	/* Basic section wrappers used across the page */
-	.section {
-		@apply relative;
+	:root[data-theme="light"] .glass-primary {
+		@apply bg-white/90;
 	}
-	.section-pad {
-		@apply py-20 px-4 md:px-8;
+	:root[data-theme="dark"] .glass-primary {
+		@apply bg-surfaceDeep/85;
+	} /* requires surfaceDeep in tailwind.config */
+
+	:root[data-theme="light"] .text-primary {
+		@apply text-slate-900;
 	}
-	.section-container {
-		@apply max-w-7xl mx-auto;
+	:root[data-theme="dark"] .text-primary {
+		@apply text-slate-200;
 	}
 
-	/* Benefits block (structure only, colours are tokenised later) */
-	.tw-benefit-item {
-		@apply flex items-start gap-4;
+	:root[data-theme="light"] .border-primary {
+		@apply border-slate-200;
 	}
-	.tw-benefit-icon {
-		@apply w-12 h-12 mb-6 flex items-center justify-center rounded-lg flex-shrink-0 bg-slate-700 text-white shadow-lg;
-	}
-	.tw-benefit-title {
-		@apply text-lg font-semibold;
-	}
-	.tw-benefit-text {
-		@apply leading-relaxed;
+	:root[data-theme="dark"] .border-primary {
+		@apply border-zinc-900;
 	}
 
-	/* Section header primitives */
-	.section-badge {
-		@apply inline-flex items-center bg-slate-200 text-slate-800 text-sm font-medium px-4 py-1.5 rounded-full shadow-lg;
+	/* Logo swap */
+	.logo-light {
+		display: inline;
 	}
-	.section-title {
-		@apply mt-6 text-3xl md:text-5xl font-extrabold token-content;
+	.logo-dark {
+		display: none;
 	}
-	.section-subtitle {
-		@apply mt-3 token-muted;
+	:root[data-theme="dark"] .logo-light {
+		display: none;
 	}
-
-	/* Feature grid and cards (structure only) */
-	.feature-grid {
-		@apply grid grid-cols-1 md:grid-cols-3 gap-12;
-	}
-	.feature {
-		@apply flex flex-col items-center text-center;
-	}
-	.feature-icon {
-		@apply w-12 h-12 mb-6 flex items-center justify-center rounded-lg bg-slate-700 text-white shadow-lg;
-	}
-	.feature-heading {
-		@apply text-5xl font-extrabold;
-	}
-	.feature-subtitle {
-		@apply mt-6 text-2xl font-medium text-slate-700 dark:text-slate-800;
-	}
-	.feature-body {
-		@apply mt-2 text-slate-500 dark:text-slate-800 text-sm max-w-xs;
+	:root[data-theme="dark"] .logo-dark {
+		display: inline;
 	}
 
-	/* Legacy text gradient utility used by Features titles */
-	.text-gradient-slate {
-		@apply text-transparent bg-clip-text bg-gradient-to-r from-slate-800 to-slate-500 dark:text-slate-800;
-	}
+	@layer components {
+		/* Base: semibold so hover does not shift layout */
+		.nav-link {
+			@apply font-semibold text-slate-900/50 dark:text-white/50 transition-colors duration-150 no-underline;
+		}
 
-	/* Text links (structural, theme colouring handled later) */
-	.text-link {
-		@apply underline transition-colors duration-150 ease-in-out;
+		/* Hover/focus: only increase colour, not weight */
+		.nav-link:hover,
+		.nav-link:focus-visible {
+			@apply text-slate-900 dark:text-white;
+		}
+
+		/* Active: full colour, already semibold */
+		.nav-link[aria-current="page"] {
+			@apply text-slate-900 dark:text-white;
+		}
+
+		/* Accessible focus outline */
+		.nav-link:focus-visible {
+			@apply outline-2 outline-offset-2 rounded outline-slate-300 dark:outline-slate-600;
+		}
 	}
 }
 
-/* ============ UTILITIES (legacy section backgrounds kept for now) ============ */
-@layer utilities {
-	/* ===== Section: Light Gradient (legacy) ===== */
-	.section-light-gradient {
-		@apply bg-gradient-to-br from-slate-50 to-slate-100;
-	}
-	.dark .section-light-gradient {
-		@apply bg-none bg-[#a3b0b0];
-	}
-
-	/* ===== Section: Light Solid (legacy) ===== */
-	.section-light-solid {
-		@apply bg-solid;
-	} /* #FAF9F6 */
-	.dark .section-light-solid {
-		@apply bg-slate-800;
+/* ===== Swap toggle (Daisy-style) ===== */
+@layer components {
+	.swap {
+		position: relative;
+		display: inline-grid;
+		place-items: center;
+		cursor: pointer;
 	}
 
-	/* Small extras */
-	.nav-link:hover {
-		@apply hover:text-slate-500;
+	/* Visually hide checkbox, keep it accessible */
+	.swap > input[type="checkbox"] {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		appearance: none;
+		cursor: pointer;
 	}
-	.nav-logo-accent {
-		@apply text-slate-500 dark:text-slate-300;
+
+	/* Base state: show "off" icon, hide "on" icon */
+	.swap .swap-off,
+	.swap .swap-on {
+		transition: transform 200ms ease, opacity 200ms ease;
+		transform-origin: 50% 50%;
+	}
+	.swap .swap-off {
+		opacity: 1;
+	}
+	.swap .swap-on {
+		opacity: 0;
+	}
+
+	/* Checked state flips visibility */
+	.swap > input:checked ~ .swap-off {
+		opacity: 0;
+	}
+	.swap > input:checked ~ .swap-on {
+		opacity: 1;
+	}
+
+	/* Rotate effect */
+	.swap-rotate .swap-off {
+		transform: rotate(0deg) scale(1);
+	}
+	.swap-rotate .swap-on {
+		transform: rotate(-90deg) scale(0.9);
+	}
+	.swap-rotate > input:checked ~ .swap-off {
+		transform: rotate(90deg) scale(0.9);
+	}
+	.swap-rotate > input:checked ~ .swap-on {
+		transform: rotate(0deg) scale(1);
+	}
+
+	/* Respect reduced motion */
+	@media (prefers-reduced-motion: reduce) {
+		.swap .swap-off,
+		.swap .swap-on {
+			transition: none;
+		}
+	}
+}
+/* ===== Swap toggle (Daisy-style) ===== */
+@layer components {
+	.swap {
+		position: relative;
+		display: inline-grid;
+		place-items: center;
+		cursor: pointer;
+		line-height: 0; /* prevent baseline shift */
+	}
+
+	/* Visually hide checkbox, keep it clickable */
+	.swap > input[type="checkbox"] {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		appearance: none;
+		cursor: pointer;
+	}
+
+	/* Stack both icons on top of each other */
+	.swap > .swap-on,
+	.swap > .swap-off {
+		grid-area: 1 / 1;
+	}
+
+	/* Base state: show off, hide on */
+	.swap .swap-off,
+	.swap .swap-on {
+		transition: transform 200ms ease, opacity 200ms ease;
+		transform-origin: 50% 50%;
+	}
+	.swap .swap-off {
+		opacity: 1;
+	}
+	.swap .swap-on {
+		opacity: 0;
+	}
+
+	/* Checked state flips visibility */
+	.swap > input:checked ~ .swap-off {
+		opacity: 0;
+	}
+	.swap > input:checked ~ .swap-on {
+		opacity: 1;
+	}
+
+	/* Rotate effect */
+	.swap-rotate .swap-off {
+		transform: rotate(0deg) scale(1);
+	}
+	.swap-rotate .swap-on {
+		transform: rotate(-90deg) scale(0.9);
+	}
+	.swap-rotate > input:checked ~ .swap-off {
+		transform: rotate(90deg) scale(0.9);
+	}
+	.swap-rotate > input:checked ~ .swap-on {
+		transform: rotate(0deg) scale(1);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.swap .swap-off,
+		.swap .swap-on {
+			transition: none;
+		}
 	}
 }
 
-/* ============ PAGE STRUCTURE OUTSIDE TAILWIND LAYERS ============ */
-body.overflow-hidden {
-	position: relative;
-	height: 100vh;
-	overflow: hidden;
-}
-
+/* ===================== STRUCTURE OUTSIDE LAYERS ===================== */
 /* Hamburger button */
 .c-hamburger {
 	position: relative;
@@ -168,203 +243,4 @@ body.overflow-hidden {
 .c-hamburger.is-active span::after {
 	bottom: 0;
 	transform: rotate(-45deg);
-}
-
-/* ============ THEME + PRIMITIVES (single source of truth) ============ */
-@layer components {
-	/* Theme-mapped surfaces and content */
-	:root[data-theme="light"] .tw-bg {
-		@apply bg-white;
-	}
-	:root[data-theme="dark"] .tw-bg {
-		@apply bg-slate-900;
-	}
-
-	:root[data-theme="light"] .tw-surface {
-		@apply bg-white;
-	}
-	:root[data-theme="dark"] .tw-surface {
-		@apply bg-slate-800;
-	}
-
-	:root[data-theme="light"] .tw-surface-glass {
-		@apply bg-white/90;
-	}
-	:root[data-theme="dark"] .tw-surface-glass {
-		@apply bg-surfaceDeep/85;
-	}
-
-	:root[data-theme="light"] .tw-content {
-		@apply text-slate-900;
-	}
-	:root[data-theme="dark"] .tw-content {
-		color: #a6adbb;
-	} /* chosen dev colour */
-
-	:root[data-theme="light"] .tw-muted {
-		@apply text-slate-500;
-	}
-	:root[data-theme="dark"] .tw-muted {
-		@apply text-slate-400;
-	}
-
-	/* Stray class kept for now, removed during cleanup */
-	:root[data-theme="light"] .tw-ƒ {
-		@apply border-slate-200;
-	}
-
-	:root[data-theme="dark"] .tw-border {
-		@apply border-zinc-900;
-	}
-
-	/* ===== Readable token aliases (no visual change) ===== */
-	.token-content {
-		@apply tw-content;
-	} /* main text colour */
-	.token-muted {
-		@apply tw-muted;
-	} /* secondary text */
-	.token-icon-tile {
-		@apply tw-icon-tile;
-	} /* icon tile surface */
-
-	/* Helper: any wrapped SVG inherits current colour */
-	.icon-uses-current svg {
-		stroke: currentColor;
-		fill: none;
-	}
-
-	/* ===== Section primitives ===== */
-	.tw-section {
-		@apply tw-bg tw-content;
-	}
-	.tw-section-pad {
-		@apply py-20 px-4 md:px-8;
-	}
-	.tw-section-container {
-		@apply max-w-7xl mx-auto;
-	}
-	.tw-section-header {
-		@apply text-center mb-12;
-	}
-	.tw-section-title {
-		@apply text-3xl md:text-5xl font-extrabold tw-content;
-	}
-	.tw-section-subtitle {
-		@apply mt-3 tw-muted;
-	}
-	.tw-section-badge {
-		@apply inline-flex items-center gap-2 px-4 py-1.5 rounded-full border tw-border shadow-sm;
-	}
-
-	/* Grid + neutral card wrappers */
-	.tw-grid-3 {
-		@apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-10;
-	}
-	.tw-card {
-		@apply tw-content;
-	}
-	.tw-card-body {
-		@apply p-0;
-	}
-
-	/* Icons — consistent size + perfect centring in tile */
-	.tw-icon {
-		@apply w-6 h-6 block;
-	}
-	.tw-icon-tile {
-		@apply w-12 h-12 mb-6 grid place-items-center rounded-lg shadow-lg;
-		line-height: 0;
-	}
-	:root[data-theme="light"] .tw-icon-tile {
-		@apply bg-slate-700 text-white;
-	}
-	:root[data-theme="dark"] .tw-icon-tile {
-		@apply bg-slate-600 text-white;
-	}
-
-	/* ===== Features scope ===== */
-	:root[data-theme="light"] .section-features {
-		@apply bg-gradient-to-br from-zinc-50 to-purple-50;
-	}
-	:root[data-theme="dark"] .section-features {
-		@apply bg-none bg-surfaceDeep;
-	}
-	@layer components {
-		/* Benefits uses the same tokens as Features */
-		.section-benefits .tw-benefit-title {
-			@apply token-content;
-		}
-		.section-benefits .tw-benefit-text {
-			@apply token-muted;
-		}
-		.section-benefits .tw-benefit-icon {
-			@apply token-icon-tile token-content;
-		}
-		.section-benefits .tw-benefit-icon svg {
-			stroke: currentColor;
-			fill: none;
-		}
-	}
-
-	/* Make Feature icons use the shared tile and adopt currentColor */
-	.section-features .feature-icon {
-		@apply tw-icon-tile mx-auto token-content;
-	}
-	.section-features .feature-icon svg {
-		stroke: currentColor;
-		fill: none;
-	}
-
-	/* Gradient text readable in both themes */
-	:root[data-theme="light"] .text-gradient-slate {
-		@apply text-transparent bg-clip-text bg-gradient-to-r from-slate-800 to-slate-500;
-	}
-	:root[data-theme="dark"] .text-gradient-slate {
-		@apply text-transparent bg-clip-text bg-gradient-to-r from-slate-300 to-slate-100;
-	}
-
-	/* Logo swap */
-	.logo-light {
-		display: inline;
-	}
-	.logo-dark {
-		display: none;
-	}
-	:root[data-theme="dark"] .logo-light {
-		display: none;
-	}
-	:root[data-theme="dark"] .logo-dark {
-		display: inline;
-	}
-
-	/* Nav links with theme awareness and accessible focus */
-	.nav-link {
-		color: rgb(15 23 42 / 0.8);
-		transition: color 150ms;
-		text-decoration: none;
-	}
-	:root[data-theme="dark"] .nav-link {
-		color: rgb(255 255 255 / 0.8);
-	}
-	.nav-link:hover,
-	.nav-link:focus-visible {
-		color: currentColor;
-	}
-	.nav-link[aria-current="page"] {
-		@apply font-semibold;
-	}
-	.nav-link:focus-visible {
-		@apply outline-2 outline-offset-2 rounded;
-		outline-color: theme(colors.slate.300);
-	}
-	:root[data-theme="dark"] .nav-link:focus-visible {
-		outline-color: theme(colors.slate.600);
-	}
-}
-
-/* Helper for any icon wrapper anywhere */
-.icon-uses-current svg {
-	stroke: currentColor;
-	fill: none;
 }
