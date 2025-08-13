@@ -1,316 +1,33 @@
-/* @keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: scale(0.9);
-	}
-	to {
-		opacity: 1;
-		transform: scale(1);
-	}
-}
-.animate-fade-in {
-	animation: fadeIn 0.25s ease-out;
-}
-.icon-transition {
-	font-size: 1.25rem;
-	transition: transform 0.2s ease, opacity 0.2s ease;
-	animation: fadeIn 0.25s ease-out;
-	opacity: 1;
-	transform: scale(1);
-} */
-
-/* a {
-	transition: none !important;
-} */
-
-/* Global scroll offset for anchor links */
+/* Global scroll offset for anchor links under fixed header */
 html {
-	scroll-padding-top: 5rem; /* adjust to match navbar height */
+	scroll-padding-top: 5rem;
 }
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ===================== COMPONENTS ===================== */
 @layer components {
-	/* Section wrappers */
-	.section {
-		@apply relative;
-	}
-	.section-pad {
-		@apply py-20 px-4 md:px-8;
-	}
-	.section-container {
-		@apply max-w-7xl mx-auto;
-	}
-
-	.tw-benefit-item {
-		@apply flex items-start gap-4;
-	}
-
-	.tw-benefit-icon {
-		/* @apply w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 bg-slate-700 text-white shadow-lg; */
-		@apply w-12 h-12 mb-6 flex items-center justify-center rounded-lg flex-shrink-0 bg-slate-700 text-white shadow-lg;
-	}
-
-	.tw-benefit-title {
-		@apply text-lg font-semibold;
-	}
-
-	.tw-benefit-text {
-		@apply leading-relaxed;
-	}
-
-	@layer utilities {
-		/* ===== Section: Light Gradient ===== */
-		.section-light-gradient {
-			@apply bg-gradient-to-br from-slate-50 to-slate-100;
-		}
-
-		/* Dark override: remove gradient, then set colour */
-		.dark .section-light-gradient {
-			@apply bg-none bg-[#a3b0b0];
-		}
-
-		/* ===== Section: Light Solid ===== */
-		.section-light-solid {
-			@apply bg-solid; /* #FAF9F6 */
-		}
-
-		.dark .section-light-solid {
-			@apply bg-slate-800;
-		}
-	}
-
-	/* Section header */
-	.section-badge {
-		@apply inline-flex items-center bg-slate-200 text-slate-800 text-sm font-medium px-4 py-1.5 rounded-full shadow-lg;
-	}
-	.section-title {
-		@apply mt-6 text-3xl md:text-4xl font-extrabold text-slate-900;
-	}
-	.section-subtitle {
-		@apply mt-4 text-slate-600 dark:text-slate-800 max-w-2xl mx-auto;
-	}
-
-	/* Feature grid and cards */
-	.feature-grid {
-		@apply grid grid-cols-1 md:grid-cols-3 gap-12;
-	}
-	.feature {
-		@apply flex flex-col items-center text-center;
-	}
-	.feature-icon {
-		@apply w-12 h-12 mb-6 flex items-center justify-center rounded-lg bg-slate-700 text-white shadow-lg;
-	}
-	.feature-heading {
-		@apply text-5xl font-extrabold;
-	}
-	.text-gradient-slate {
-		@apply text-transparent bg-clip-text bg-gradient-to-r from-slate-800 to-slate-500 dark:text-slate-800;
-	}
-	.feature-subtitle {
-		@apply mt-6 text-2xl font-medium text-slate-700 dark:text-slate-800;
-	}
-	.feature-body {
-		@apply mt-2 text-slate-500 dark:text-slate-800 text-sm max-w-xs;
-	}
-
-	/* Links */
-	.nav-link {
-		@apply text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white transition-colors duration-150 ease-in-out;
-	}
-	.text-link {
-		@apply text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-150 ease-in-out;
-	}
-}
-
-@layer utilities {
-	.nav-link {
-		@apply hover:text-slate-500;
-	}
-
-	.nav-logo-accent {
-		@apply text-slate-500 dark:text-slate-300;
-	}
-}
-
-body.overflow-hidden {
-	position: relative;
-	height: 100vh;
-	overflow: hidden;
-}
-
-/* === Hamburger Menu Animation === */
-.c-hamburger {
-	position: relative;
-	display: block;
-	width: 24px;
-	height: 20px;
-	cursor: pointer;
-}
-
-.c-hamburger span,
-.c-hamburger span::before,
-.c-hamburger span::after {
-	display: block;
-	position: absolute;
-	height: 2px;
-	width: 100%;
-	background: currentColor;
-	transition: all 0.3s ease-in-out;
-	border-radius: 1px;
-}
-
-.c-hamburger span {
-	top: 50%;
-	transform: translateY(-50%);
-}
-
-.c-hamburger span::before {
-	content: "";
-	top: -8px;
-}
-
-.c-hamburger span::after {
-	content: "";
-	bottom: -8px;
-}
-
-/* === Active X === */
-.c-hamburger.is-active span {
-	background-color: transparent;
-}
-
-.c-hamburger.is-active span::before {
-	top: 0;
-	transform: rotate(45deg);
-}
-
-.c-hamburger.is-active span::after {
-	bottom: 0;
-	transform: rotate(-45deg);
-}
-
-/* ============ THEME + PRIMITIVES (single source of truth) ============ */
-@layer components {
-	/* Theme-mapped helpers (Tailwind names only, easy to edit) */
-	:root[data-theme="light"] .tw-bg {
-		@apply bg-white;
-	}
-	:root[data-theme="dark"] .tw-bg {
-		@apply bg-slate-900;
-	}
-
-	:root[data-theme="light"] .tw-surface {
-		@apply bg-white;
-	}
-	:root[data-theme="dark"] .tw-surface {
-		@apply bg-slate-800;
-	}
-
-	:root[data-theme="light"] .tw-surface-glass {
+	:root[data-theme="light"] .glass-primary {
 		@apply bg-white/90;
 	}
-	:root[data-theme="dark"] .tw-surface-glass {
+	:root[data-theme="dark"] .glass-primary {
 		@apply bg-surfaceDeep/85;
-	}
+	} /* requires surfaceDeep in tailwind.config */
 
-	:root[data-theme="light"] .tw-content {
+	:root[data-theme="light"] .text-primary {
 		@apply text-slate-900;
 	}
-	:root[data-theme="dark"] .tw-content {
-		/* @apply text-white; */
-		color: #a6adbb;
+	:root[data-theme="dark"] .text-primary {
+		@apply text-slate-200;
 	}
 
-	:root[data-theme="light"] .tw-muted {
-		@apply text-slate-500;
-	}
-	:root[data-theme="dark"] .tw-muted {
-		@apply text-slate-400;
-	}
-
-	:root[data-theme="light"] .tw-ƒ {
+	:root[data-theme="light"] .border-primary {
 		@apply border-slate-200;
 	}
-
-	:root[data-theme="dark"] .tw-border {
+	:root[data-theme="dark"] .border-primary {
 		@apply border-zinc-900;
-	}
-
-	/* Section primitives */
-	.tw-section {
-		@apply tw-bg tw-content;
-	}
-	.tw-section-pad {
-		@apply py-20 px-4 md:px-8;
-	}
-	.tw-section-container {
-		@apply max-w-7xl mx-auto;
-	}
-	.tw-section-header {
-		@apply text-center mb-12;
-	}
-	.tw-section-title {
-		@apply text-3xl md:text-5xl font-extrabold tw-content;
-	}
-	.tw-section-subtitle {
-		@apply mt-3 tw-muted;
-	}
-	.tw-section-badge {
-		@apply inline-flex items-center gap-2 px-4 py-1.5 rounded-full border tw-border shadow-sm;
-	}
-
-	/* Grid + neutral card wrappers */
-	.tw-grid-3 {
-		@apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-10;
-	}
-	.tw-card {
-		@apply tw-content;
-	}
-	.tw-card-body {
-		@apply p-0;
-	}
-
-	/* Icons — consistent size + perfect centering in tile */
-	.tw-icon {
-		@apply w-6 h-6 block;
-	}
-
-	.tw-icon-tile {
-		@apply w-12 h-12 mb-6 grid place-items-center rounded-lg shadow-lg;
-		line-height: 0; /* prevents baseline jitter */
-	}
-	:root[data-theme="light"] .tw-icon-tile {
-		@apply bg-slate-700 text-white;
-	}
-	:root[data-theme="dark"] .tw-icon-tile {
-		@apply bg-slate-600 text-white;
-	}
-
-	/* Features scope */
-	:root[data-theme="light"] .section-features {
-		@apply bg-gradient-to-br from-zinc-50 to-purple-50;
-	}
-	:root[data-theme="dark"] .section-features {
-		@apply bg-none bg-surfaceDeep;
-	}
-
-	.section-features .feature-icon {
-		@apply tw-icon-tile mx-auto;
-	}
-	.section-features .feature-icon svg {
-		stroke: currentColor;
-		fill: none;
-	}
-
-	/* Gradient text readable in both themes */
-	:root[data-theme="light"] .text-gradient-slate {
-		@apply text-transparent bg-clip-text bg-gradient-to-r from-slate-800 to-slate-500;
-	}
-	:root[data-theme="dark"] .text-gradient-slate {
-		@apply text-transparent bg-clip-text bg-gradient-to-r from-slate-300 to-slate-100;
 	}
 
 	/* Logo swap */
@@ -327,27 +44,203 @@ body.overflow-hidden {
 		display: inline;
 	}
 
-	/* Nav links */
-	.nav-link {
-		color: rgb(15 23 42 / 0.8);
-		transition: color 150ms;
-		text-decoration: none;
+	@layer components {
+		/* Base: semibold so hover does not shift layout */
+		.nav-link {
+			@apply font-semibold text-slate-900/50 dark:text-white/50 transition-colors duration-150 no-underline;
+		}
+
+		/* Hover/focus: only increase colour, not weight */
+		.nav-link:hover,
+		.nav-link:focus-visible {
+			@apply text-slate-900 dark:text-white;
+		}
+
+		/* Active: full colour, already semibold */
+		.nav-link[aria-current="page"] {
+			@apply text-slate-900 dark:text-white;
+		}
+
+		/* Accessible focus outline */
+		.nav-link:focus-visible {
+			@apply outline-2 outline-offset-2 rounded outline-slate-300 dark:outline-slate-600;
+		}
 	}
-	:root[data-theme="dark"] .nav-link {
-		color: rgb(255 255 255 / 0.8);
+}
+
+/* ===== Swap toggle (Daisy-style) ===== */
+@layer components {
+	.swap {
+		position: relative;
+		display: inline-grid;
+		place-items: center;
+		cursor: pointer;
 	}
-	.nav-link:hover,
-	.nav-link:focus-visible {
-		color: currentColor;
+
+	/* Visually hide checkbox, keep it accessible */
+	.swap > input[type="checkbox"] {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		appearance: none;
+		cursor: pointer;
 	}
-	.nav-link[aria-current="page"] {
-		@apply font-semibold;
+
+	/* Base state: show "off" icon, hide "on" icon */
+	.swap .swap-off,
+	.swap .swap-on {
+		transition: transform 200ms ease, opacity 200ms ease;
+		transform-origin: 50% 50%;
 	}
-	.nav-link:focus-visible {
-		@apply outline-2 outline-offset-2 rounded;
-		outline-color: theme(colors.slate.300);
+	.swap .swap-off {
+		opacity: 1;
 	}
-	:root[data-theme="dark"] .nav-link:focus-visible {
-		outline-color: theme(colors.slate.600);
+	.swap .swap-on {
+		opacity: 0;
 	}
+
+	/* Checked state flips visibility */
+	.swap > input:checked ~ .swap-off {
+		opacity: 0;
+	}
+	.swap > input:checked ~ .swap-on {
+		opacity: 1;
+	}
+
+	/* Rotate effect */
+	.swap-rotate .swap-off {
+		transform: rotate(0deg) scale(1);
+	}
+	.swap-rotate .swap-on {
+		transform: rotate(-90deg) scale(0.9);
+	}
+	.swap-rotate > input:checked ~ .swap-off {
+		transform: rotate(90deg) scale(0.9);
+	}
+	.swap-rotate > input:checked ~ .swap-on {
+		transform: rotate(0deg) scale(1);
+	}
+
+	/* Respect reduced motion */
+	@media (prefers-reduced-motion: reduce) {
+		.swap .swap-off,
+		.swap .swap-on {
+			transition: none;
+		}
+	}
+}
+/* ===== Swap toggle (Daisy-style) ===== */
+@layer components {
+	.swap {
+		position: relative;
+		display: inline-grid;
+		place-items: center;
+		cursor: pointer;
+		line-height: 0; /* prevent baseline shift */
+	}
+
+	/* Visually hide checkbox, keep it clickable */
+	.swap > input[type="checkbox"] {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		appearance: none;
+		cursor: pointer;
+	}
+
+	/* Stack both icons on top of each other */
+	.swap > .swap-on,
+	.swap > .swap-off {
+		grid-area: 1 / 1;
+	}
+
+	/* Base state: show off, hide on */
+	.swap .swap-off,
+	.swap .swap-on {
+		transition: transform 200ms ease, opacity 200ms ease;
+		transform-origin: 50% 50%;
+	}
+	.swap .swap-off {
+		opacity: 1;
+	}
+	.swap .swap-on {
+		opacity: 0;
+	}
+
+	/* Checked state flips visibility */
+	.swap > input:checked ~ .swap-off {
+		opacity: 0;
+	}
+	.swap > input:checked ~ .swap-on {
+		opacity: 1;
+	}
+
+	/* Rotate effect */
+	.swap-rotate .swap-off {
+		transform: rotate(0deg) scale(1);
+	}
+	.swap-rotate .swap-on {
+		transform: rotate(-90deg) scale(0.9);
+	}
+	.swap-rotate > input:checked ~ .swap-off {
+		transform: rotate(90deg) scale(0.9);
+	}
+	.swap-rotate > input:checked ~ .swap-on {
+		transform: rotate(0deg) scale(1);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.swap .swap-off,
+		.swap .swap-on {
+			transition: none;
+		}
+	}
+}
+
+/* ===================== STRUCTURE OUTSIDE LAYERS ===================== */
+/* Hamburger button */
+.c-hamburger {
+	position: relative;
+	display: block;
+	width: 24px;
+	height: 20px;
+	cursor: pointer;
+}
+.c-hamburger span,
+.c-hamburger span::before,
+.c-hamburger span::after {
+	display: block;
+	position: absolute;
+	height: 2px;
+	width: 100%;
+	background: currentColor;
+	transition: all 0.3s ease-in-out;
+	border-radius: 1px;
+}
+.c-hamburger span {
+	top: 50%;
+	transform: translateY(-50%);
+}
+.c-hamburger span::before {
+	content: "";
+	top: -8px;
+}
+.c-hamburger span::after {
+	content: "";
+	bottom: -8px;
+}
+.c-hamburger.is-active span {
+	background-color: transparent;
+}
+.c-hamburger.is-active span::before {
+	top: 0;
+	transform: rotate(45deg);
+}
+.c-hamburger.is-active span::after {
+	bottom: 0;
+	transform: rotate(-45deg);
 }
