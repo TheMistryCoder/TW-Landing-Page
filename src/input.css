@@ -1,4 +1,7 @@
-/* Global scroll offset for anchor links under fixed header */
+/* =========================================
+   Global scroll offset for anchor links
+   (prevents content from hiding under fixed header)
+========================================= */
 html {
 	scroll-padding-top: 5rem;
 }
@@ -7,15 +10,20 @@ html {
 @tailwind components;
 @tailwind utilities;
 
-/* ===================== COMPONENTS ===================== */
+/* =========================================
+   COMPONENTS (Single Flattened Layer)
+========================================= */
 @layer components {
+	/* ---------- THEME TOKENS ---------- */
+	/* Glass background token for elements with a frosted effect */
 	:root[data-theme="light"] .glass-primary {
 		@apply bg-white/90;
 	}
 	:root[data-theme="dark"] .glass-primary {
-		@apply bg-surfaceDeep/85;
-	} /* requires surfaceDeep in tailwind.config */
+		@apply bg-surfaceDeep/85; /* surfaceDeep is defined in tailwind.config */
+	}
 
+	/* Primary text colour */
 	:root[data-theme="light"] .text-primary {
 		@apply text-slate-900;
 	}
@@ -23,6 +31,7 @@ html {
 		@apply text-slate-200;
 	}
 
+	/* Primary border colour */
 	:root[data-theme="light"] .border-primary {
 		@apply border-slate-200;
 	}
@@ -30,7 +39,8 @@ html {
 		@apply border-zinc-900;
 	}
 
-	/* Logo swap */
+	/* ---------- LOGO SWAP ---------- */
+	/* Show light logo in light theme, dark logo in dark theme */
 	.logo-light {
 		display: inline;
 	}
@@ -44,40 +54,47 @@ html {
 		display: inline;
 	}
 
-	@layer components {
-		/* Base: semibold so hover does not shift layout */
-		.nav-link {
-			@apply font-semibold text-slate-900/50 dark:text-white/50 transition-colors duration-150 no-underline;
-		}
-
-		/* Hover/focus: only increase colour, not weight */
-		.nav-link:hover,
-		.nav-link:focus-visible {
-			@apply text-slate-900 dark:text-white;
-		}
-
-		/* Active: full colour, already semibold */
-		.nav-link[aria-current="page"] {
-			@apply text-slate-900 dark:text-white;
-		}
-
-		/* Accessible focus outline */
-		.nav-link:focus-visible {
-			@apply outline-2 outline-offset-2 rounded outline-slate-300 dark:outline-slate-600;
-		}
+	/* ---------- NAVIGATION LINKS ---------- */
+	/* Base: semibold so hover does not shift layout */
+	.nav-link {
+		@apply font-semibold text-slate-900/50 dark:text-white/50 transition-colors duration-150 no-underline;
 	}
-}
 
-/* ===== Swap toggle (Daisy-style) ===== */
-@layer components {
+	/* Hover/focus: only increase colour, not weight */
+	.nav-link:hover,
+	.nav-link:focus-visible {
+		@apply text-slate-900 dark:text-white;
+	}
+
+	/* Active: full colour, already semibold */
+	.nav-link[aria-current="page"] {
+		@apply text-slate-900 dark:text-white;
+	}
+
+	/* Accessible focus outline */
+	.nav-link:focus-visible {
+		@apply outline-2 outline-offset-2 rounded outline-slate-300 dark:outline-slate-600;
+	}
+
+	/* ---------- MUTED TEXT TOKEN ---------- */
+	:root[data-theme="light"] .text-muted {
+		@apply text-slate-600/80;
+	}
+	:root[data-theme="dark"] .text-muted {
+		@apply text-slate-300/80;
+	}
+
+	/* ---------- SWAP TOGGLE (Theme Toggle) ---------- */
+	/* Container for swap toggle (DaisyUI-style) */
 	.swap {
 		position: relative;
 		display: inline-grid;
 		place-items: center;
 		cursor: pointer;
+		line-height: 0; /* removes extra spacing in inline-grid */
 	}
 
-	/* Visually hide checkbox, keep it accessible */
+	/* Visually hide checkbox, keep it accessible to screen readers */
 	.swap > input[type="checkbox"] {
 		position: absolute;
 		inset: 0;
@@ -88,121 +105,29 @@ html {
 		cursor: pointer;
 	}
 
-	/* Base state: show "off" icon, hide "on" icon */
-	.swap .swap-off,
-	.swap .swap-on {
-		transition: transform 200ms ease, opacity 200ms ease;
-		transform-origin: 50% 50%;
-	}
-	.swap .swap-off {
-		opacity: 1;
-	}
-	.swap .swap-on {
-		opacity: 0;
-	}
-
-	/* Checked state flips visibility */
-	.swap > input:checked ~ .swap-off {
-		opacity: 0;
-	}
-	.swap > input:checked ~ .swap-on {
-		opacity: 1;
-	}
-
-	/* Rotate effect */
-	.swap-rotate .swap-off {
-		transform: rotate(0deg) scale(1);
-	}
-	.swap-rotate .swap-on {
-		transform: rotate(-90deg) scale(0.9);
-	}
-	.swap-rotate > input:checked ~ .swap-off {
-		transform: rotate(90deg) scale(0.9);
-	}
-	.swap-rotate > input:checked ~ .swap-on {
-		transform: rotate(0deg) scale(1);
-	}
-
-	/* Respect reduced motion */
-	@media (prefers-reduced-motion: reduce) {
-		.swap .swap-off,
-		.swap .swap-on {
-			transition: none;
-		}
-	}
-}
-/* ===== Swap toggle (Daisy-style) ===== */
-@layer components {
-	.swap {
-		position: relative;
-		display: inline-grid;
-		place-items: center;
-		cursor: pointer;
-		line-height: 0; /* prevent baseline shift */
-	}
-
-	/* Visually hide checkbox, keep it clickable */
-	.swap > input[type="checkbox"] {
-		position: absolute;
-		inset: 0;
-		width: 100%;
-		height: 100%;
-		opacity: 0;
-		appearance: none;
-		cursor: pointer;
-	}
-
-	/* Stack both icons on top of each other */
-	.swap > .swap-on,
-	.swap > .swap-off {
+	/* Ensure swap-on and swap-off share the same grid cell */
+	.swap-on,
+	.swap-off {
 		grid-area: 1 / 1;
+		transition: transform 0.3s ease;
 	}
 
-	/* Base state: show off, hide on */
-	.swap .swap-off,
-	.swap .swap-on {
-		transition: transform 200ms ease, opacity 200ms ease;
-		transform-origin: 50% 50%;
-	}
-	.swap .swap-off {
-		opacity: 1;
-	}
-	.swap .swap-on {
-		opacity: 0;
+	/* Hide swap-on when unchecked */
+	.swap input:not(:checked) ~ .swap-on {
+		transform: scale(0);
 	}
 
-	/* Checked state flips visibility */
-	.swap > input:checked ~ .swap-off {
-		opacity: 0;
-	}
-	.swap > input:checked ~ .swap-on {
-		opacity: 1;
-	}
-
-	/* Rotate effect */
-	.swap-rotate .swap-off {
-		transform: rotate(0deg) scale(1);
-	}
-	.swap-rotate .swap-on {
-		transform: rotate(-90deg) scale(0.9);
-	}
-	.swap-rotate > input:checked ~ .swap-off {
-		transform: rotate(90deg) scale(0.9);
-	}
-	.swap-rotate > input:checked ~ .swap-on {
-		transform: rotate(0deg) scale(1);
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.swap .swap-off,
-		.swap .swap-on {
-			transition: none;
-		}
+	/* Hide swap-off when checked */
+	.swap input:checked ~ .swap-off {
+		transform: scale(0);
 	}
 }
 
-/* ===================== STRUCTURE OUTSIDE LAYERS ===================== */
-/* Hamburger button */
+/* =========================================
+   STRUCTURE OUTSIDE LAYERS
+========================================= */
+
+/* ---------- HAMBURGER BUTTON ---------- */
 .c-hamburger {
 	position: relative;
 	display: block;
@@ -210,6 +135,7 @@ html {
 	height: 20px;
 	cursor: pointer;
 }
+
 .c-hamburger span,
 .c-hamburger span::before,
 .c-hamburger span::after {
@@ -221,25 +147,31 @@ html {
 	transition: all 0.3s ease-in-out;
 	border-radius: 1px;
 }
+
 .c-hamburger span {
 	top: 50%;
 	transform: translateY(-50%);
 }
+
 .c-hamburger span::before {
 	content: "";
 	top: -8px;
 }
+
 .c-hamburger span::after {
 	content: "";
 	bottom: -8px;
 }
+
 .c-hamburger.is-active span {
 	background-color: transparent;
 }
+
 .c-hamburger.is-active span::before {
 	top: 0;
 	transform: rotate(45deg);
 }
+
 .c-hamburger.is-active span::after {
 	bottom: 0;
 	transform: rotate(-45deg);
