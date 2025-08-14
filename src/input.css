@@ -59,6 +59,40 @@ html {
 		@apply border-slate-500;
 	}
 
+	/* ---------- SECTION HELPERS ---------- */
+	/* GRADIENT BACKGROUNDS */
+	.sectionLightGradientPrimary {
+		@apply bg-sectionLightSolidPrimary bg-gradient-to-br from-slate-200 via-purple-50 to-slate-200 dark:bg-none;
+	}
+	.sectionLightGradientSecondary {
+		@apply bg-sectionLightSolidSecondary bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 dark:bg-none;
+	}
+	.sectionDarkGradientPrimary {
+		@apply bg-sectionDarkSolidPrimary bg-gradient-to-br from-sectionDarkSolidPrimary to-slate-900;
+	}
+	.sectionDarkGradientSecondary {
+		@apply bg-sectionDarkSolidSecondary bg-gradient-to-br from-sectionDarkSolidSecondary to-slate-900;
+	}
+
+	/* SOLID BACKGROUNDS */
+	.sectionLightSolidPrimary {
+		@apply bg-sectionLightSolidPrimary;
+	}
+	.sectionLightSolidSecondary {
+		@apply bg-sectionLightSolidSecondary;
+	}
+	.sectionDarkSolidPrimary {
+		@apply bg-sectionDarkSolidPrimary;
+	}
+	.sectionDarkSolidSecondary {
+		@apply bg-sectionDarkSolidSecondary;
+	}
+
+	/* PADDING */
+	.section-pad {
+		@apply py-20;
+	}
+
 	/* ---------- CARD (Reusable) ---------- */
 	.card {
 		@apply flex flex-col items-center;
@@ -66,8 +100,7 @@ html {
 
 	/* ---------- ICON BOX PRIMARY (Reusable) ---------- */
 	.icon-box-primary {
-		@apply flex items-center justify-center rounded-md shadow-lg;
-		@apply bg-bgComponentDark text-white w-12 h-12;
+		@apply flex items-center justify-center rounded-md shadow-lg bg-bgComponentDark text-white w-12 h-12;
 	}
 
 	.icon-svg {
@@ -78,8 +111,7 @@ html {
 
 	/* ---------- BADGE PRIMARY (Reusable) ---------- */
 	.badge-primary {
-		@apply inline-flex items-center gap-2 text-primary rounded-full px-4 py-2 text-sm font-medium border border-secondary shadow-lg;
-		@apply bg-slate-100;
+		@apply inline-flex items-center gap-2 text-primary rounded-full px-4 py-2 text-sm font-medium border border-secondary shadow-lg bg-slate-100;
 	}
 
 	/* Dark mode: darker bg + lighter text */
