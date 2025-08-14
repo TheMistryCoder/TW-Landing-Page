@@ -176,6 +176,32 @@ html {
 	.swap input:checked ~ .swap-off {
 		transform: scale(0);
 	}
+	/* Swap rotate variant (restores Daisy-style rotation) */
+	.swap.swap-rotate .swap-on,
+	.swap.swap-rotate .swap-off {
+		transition: transform 0.3s ease, opacity 0.3s ease;
+		transform-origin: 50% 50%;
+	}
+
+	/* Hidden states rotate out */
+	.swap.swap-rotate input:not(:checked) ~ .swap-on {
+		transform: rotate(-90deg) scale(0.9);
+		opacity: 0;
+	}
+	.swap.swap-rotate input:checked ~ .swap-off {
+		transform: rotate(90deg) scale(0.9);
+		opacity: 0;
+	}
+
+	/* Visible states rotate in */
+	.swap.swap-rotate input:not(:checked) ~ .swap-off {
+		transform: rotate(0deg) scale(1);
+		opacity: 1;
+	}
+	.swap.swap-rotate input:checked ~ .swap-on {
+		transform: rotate(0deg) scale(1);
+		opacity: 1;
+	}
 }
 
 /* =========================================
