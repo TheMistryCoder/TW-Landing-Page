@@ -39,6 +39,25 @@ html {
 		@apply border-zinc-900;
 	}
 
+	/* Secondary border colour (softer than primary) */
+	:root[data-theme="light"] .border-secondary {
+		@apply border-slate-400;
+	}
+	:root[data-theme="dark"] .border-secondary {
+		@apply border-slate-500;
+	}
+
+	/* ---------- BADGE PRIMARY (Reusable) ---------- */
+	.badge-primary {
+		@apply inline-flex items-center gap-2 text-primary rounded-full px-4 py-2 text-sm font-medium border border-secondary shadow-lg;
+		@apply bg-slate-100; /* Light mode background */
+	}
+
+	/* Dark mode: darker bg + lighter text */
+	:root[data-theme="dark"] .badge-primary {
+		@apply bg-surfaceDeep border-secondary text-white shadow-none;
+	}
+
 	/* ---------- LOGO SWAP ---------- */
 	/* Show light logo in light theme, dark logo in dark theme */
 	.logo-light {
