@@ -53,10 +53,10 @@ html {
 
 	/* Secondary border colour (softer than primary) */
 	:root[data-theme="light"] .border-secondary {
-		@apply border-slate-400;
+		@apply border-slate-300;
 	}
 	:root[data-theme="dark"] .border-secondary {
-		@apply border-slate-500;
+		@apply border-slate-600;
 	}
 
 	/* ---------- SECTION HELPERS ---------- */
@@ -93,6 +93,13 @@ html {
 		@apply py-20;
 	}
 
+	/* Gradient headline text that flips for dark mode */
+	/* Gradient headline text: light mode uses your exact text token as the dark stop */
+	.text-gradient-primary {
+		@apply bg-clip-text text-transparent
+         bg-gradient-to-r from-textOnLight to-slate-500 dark:from-slate-500 dark:to-slate-400;
+	}
+
 	/* ---------- CARD (Reusable) ---------- */
 	.card {
 		@apply flex flex-col items-center;
@@ -100,7 +107,7 @@ html {
 
 	/* ---------- ICON BOX PRIMARY (Reusable) ---------- */
 	.icon-box-primary {
-		@apply flex items-center justify-center rounded-md shadow-lg bg-bgComponentDark text-white w-12 h-12;
+		@apply flex items-center justify-center rounded-lg shadow-lg bg-slate-700 text-white w-12 h-12;
 	}
 
 	.icon-svg {
