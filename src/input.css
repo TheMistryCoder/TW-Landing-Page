@@ -20,15 +20,27 @@ html {
 		@apply bg-white/90;
 	}
 	:root[data-theme="dark"] .glass-primary {
-		@apply bg-surfaceDeep/85; /* surfaceDeep is defined in tailwind.config */
+		@apply bg-bgComponentDark/85;
 	}
 
 	/* Primary text colour */
 	:root[data-theme="light"] .text-primary {
-		@apply text-slate-900;
+		@apply text-textOnLight;
 	}
 	:root[data-theme="dark"] .text-primary {
-		@apply text-slate-200;
+		@apply text-textOnDark;
+	}
+
+	/* Navigation links */
+	.nav-link {
+		@apply font-semibold text-textOnLight/50 dark:text-textOnDark/50 transition-colors duration-150 no-underline;
+	}
+	.nav-link:hover,
+	.nav-link:focus-visible {
+		@apply text-textOnLight dark:text-textOnDark;
+	}
+	.nav-link[aria-current="page"] {
+		@apply text-textOnLight dark:text-textOnDark;
 	}
 
 	/* Primary border colour */
@@ -47,19 +59,35 @@ html {
 		@apply border-slate-500;
 	}
 
+	/* ---------- CARD (Reusable) ---------- */
+	.card {
+		@apply flex flex-col items-center;
+	}
+
+	/* ---------- ICON BOX PRIMARY (Reusable) ---------- */
+	.icon-box-primary {
+		@apply flex items-center justify-center rounded-md shadow-lg;
+		@apply bg-bgComponentDark text-white w-12 h-12;
+	}
+
+	.icon-svg {
+		@apply block h-6 w-6;
+		stroke: currentColor;
+		fill: none;
+	}
+
 	/* ---------- BADGE PRIMARY (Reusable) ---------- */
 	.badge-primary {
 		@apply inline-flex items-center gap-2 text-primary rounded-full px-4 py-2 text-sm font-medium border border-secondary shadow-lg;
-		@apply bg-slate-100; /* Light mode background */
+		@apply bg-slate-100;
 	}
 
 	/* Dark mode: darker bg + lighter text */
 	:root[data-theme="dark"] .badge-primary {
-		@apply bg-surfaceDeep border-secondary text-white shadow-none;
+		@apply bg-bgComponentDark border-secondary text-white shadow-none;
 	}
 
 	/* ---------- LOGO SWAP ---------- */
-	/* Show light logo in light theme, dark logo in dark theme */
 	.logo-light {
 		display: inline;
 	}
@@ -73,47 +101,22 @@ html {
 		display: inline;
 	}
 
-	/* ---------- NAVIGATION LINKS ---------- */
-	/* Base: semibold so hover does not shift layout */
-	.nav-link {
-		@apply font-semibold text-slate-900/50 dark:text-white/50 transition-colors duration-150 no-underline;
-	}
-
-	/* Hover/focus: only increase colour, not weight */
-	.nav-link:hover,
-	.nav-link:focus-visible {
-		@apply text-slate-900 dark:text-white;
-	}
-
-	/* Active: full colour, already semibold */
-	.nav-link[aria-current="page"] {
-		@apply text-slate-900 dark:text-white;
-	}
-
-	/* Accessible focus outline */
-	.nav-link:focus-visible {
-		@apply outline-2 outline-offset-2 rounded outline-slate-300 dark:outline-slate-600;
-	}
-
 	/* ---------- MUTED TEXT TOKEN ---------- */
 	:root[data-theme="light"] .text-muted {
-		@apply text-slate-600/80;
+		@apply text-textMutedOnLight;
 	}
 	:root[data-theme="dark"] .text-muted {
-		@apply text-slate-300/80;
+		@apply text-textMutedOnDark;
 	}
 
 	/* ---------- SWAP TOGGLE (Theme Toggle) ---------- */
-	/* Container for swap toggle (DaisyUI-style) */
 	.swap {
 		position: relative;
 		display: inline-grid;
 		place-items: center;
 		cursor: pointer;
-		line-height: 0; /* removes extra spacing in inline-grid */
+		line-height: 0;
 	}
-
-	/* Visually hide checkbox, keep it accessible to screen readers */
 	.swap > input[type="checkbox"] {
 		position: absolute;
 		inset: 0;
@@ -123,20 +126,14 @@ html {
 		appearance: none;
 		cursor: pointer;
 	}
-
-	/* Ensure swap-on and swap-off share the same grid cell */
 	.swap-on,
 	.swap-off {
 		grid-area: 1 / 1;
 		transition: transform 0.3s ease;
 	}
-
-	/* Hide swap-on when unchecked */
 	.swap input:not(:checked) ~ .swap-on {
 		transform: scale(0);
 	}
-
-	/* Hide swap-off when checked */
 	.swap input:checked ~ .swap-off {
 		transform: scale(0);
 	}
@@ -154,7 +151,6 @@ html {
 	height: 20px;
 	cursor: pointer;
 }
-
 .c-hamburger span,
 .c-hamburger span::before,
 .c-hamburger span::after {
@@ -166,31 +162,25 @@ html {
 	transition: all 0.3s ease-in-out;
 	border-radius: 1px;
 }
-
 .c-hamburger span {
 	top: 50%;
 	transform: translateY(-50%);
 }
-
 .c-hamburger span::before {
 	content: "";
 	top: -8px;
 }
-
 .c-hamburger span::after {
 	content: "";
 	bottom: -8px;
 }
-
 .c-hamburger.is-active span {
 	background-color: transparent;
 }
-
 .c-hamburger.is-active span::before {
 	top: 0;
 	transform: rotate(45deg);
 }
-
 .c-hamburger.is-active span::after {
 	bottom: 0;
 	transform: rotate(-45deg);
