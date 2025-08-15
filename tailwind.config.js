@@ -21,7 +21,8 @@ module.exports = {
         sectionDarkSolidSecondary: "#191e25",
 
         // Component backgrounds
-        bgComponentDark: "#1d232a",
+        bgComponentDarkPrimary: "#1d232a",
+        bgComponentDarkSecondary: "#344156",
 
         // Text colours
         textOnLight: "#1A2930",

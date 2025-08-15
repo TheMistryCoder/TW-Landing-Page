@@ -20,7 +20,7 @@ html {
 		@apply bg-white/90;
 	}
 	:root[data-theme="dark"] .glass-primary {
-		@apply bg-bgComponentDark/85;
+		@apply bg-bgComponentDarkPrimary/85;
 	}
 
 	/* Primary text colour */
@@ -110,6 +110,11 @@ html {
 		@apply flex items-center justify-center rounded-lg shadow-lg bg-slate-700 text-white w-12 h-12;
 	}
 
+	/* Dark mode: darker bg + lighter text */
+	:root[data-theme="dark"] .icon-box-primary {
+		@apply bg-bgComponentDarkSecondary border-secondary text-white shadow-none;
+	}
+
 	.icon-svg {
 		@apply block h-6 w-6;
 		stroke: currentColor;
@@ -123,7 +128,7 @@ html {
 
 	/* Dark mode: darker bg + lighter text */
 	:root[data-theme="dark"] .badge-primary {
-		@apply bg-bgComponentDark border-secondary text-white shadow-none;
+		@apply bg-bgComponentDarkSecondary border-secondary text-white shadow-none;
 	}
 
 	/* ---------- LOGO SWAP ---------- */
