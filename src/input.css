@@ -93,6 +93,11 @@ html {
 		@apply py-20;
 	}
 
+	/* ---------- HERO TOP PADDING ---------- */
+	.hero-pad {
+		@apply pt-[calc(5rem+5rem)] pb-20; /* top = navbar (5rem) + baseline (5rem), bottom = baseline */
+	}
+
 	/* Gradient headline text that flips for dark mode */
 	/* Gradient headline text: light mode uses your exact text token as the dark stop */
 	.text-gradient-primary {
