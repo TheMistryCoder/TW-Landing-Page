@@ -112,7 +112,7 @@ html {
 
 	/* ---------- ICON BOX PRIMARY (Reusable) ---------- */
 	.icon-box-primary {
-		@apply flex items-center justify-center rounded-lg shadow-lg bg-slate-700 text-white w-12 h-12;
+		@apply flex items-center justify-center shrink-0 rounded-lg shadow-lg bg-slate-700 text-white w-12 h-12;
 	}
 
 	/* Dark mode: darker bg + lighter text */
