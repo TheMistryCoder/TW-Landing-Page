@@ -66,41 +66,35 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ---------- THEME: Daisy-style checkbox + persistence ----------
-  function initTheme() {
-    const html   = document.documentElement;
-    const cb     = $("#theme-checkbox");      // new swap checkbox
-    const oldBtn = $("#theme-toggle");        // old button (now hidden, but kept for safety)
+function initTheme() {
+  const html     = document.documentElement;
+  const cbMain   = $("#theme-checkbox");          // desktop
+  const cbMobile = $("#theme-checkbox-mobile");   // mobile
+  const btnLight = $("#theme-light-trigger");
+  const btnDark  = $("#theme-dark-trigger");
 
-    // Apply and persist theme. Also add/remove the 'dark' class for Tailwind dark: utilities.
-    const applyTheme = (mode) => {
-      html.setAttribute("data-theme", mode);
-      if (mode === "dark") html.classList.add("dark");
-      else html.classList.remove("dark");
-      localStorage.setItem("theme", mode);
-      if (cb) cb.checked = (mode === "dark"); // keep swap icons in sync
-    };
+  const applyTheme = (mode) => {
+    html.setAttribute("data-theme", mode);
+    if (mode === "dark") html.classList.add("dark");
+    else html.classList.remove("dark");
+    localStorage.setItem("theme", mode);
+    if (cbMain) cbMain.checked = (mode === "dark");
+    if (cbMobile) cbMobile.checked = (mode === "dark");
+  };
 
-    // Initial state
-    const saved = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const start = saved || (prefersDark ? "dark" : "light");
-    applyTheme(start);
+  const saved = localStorage.getItem("theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  applyTheme(saved || (prefersDark ? "dark" : "light"));
 
-    // New checkbox toggle
-    if (cb) {
-      cb.addEventListener("change", (e) => {
-        applyTheme(e.target.checked ? "dark" : "light");
-      });
-    }
+  if (cbMain)   cbMain.addEventListener("change", (e) => applyTheme(e.target.checked ? "dark" : "light"));
+  if (cbMobile) cbMobile.addEventListener("change", (e) => applyTheme(e.target.checked ? "dark" : "light"));
 
-    // Backwards compatibility: if old button exists, still works
-    if (oldBtn) {
-      oldBtn.addEventListener("click", () => {
-        const isDark = html.classList.contains("dark");
-        applyTheme(isDark ? "light" : "dark");
-      });
-    }
-  }
+  // Make the labels clickable
+  if (btnLight) btnLight.addEventListener("click", () => applyTheme("light"));
+  if (btnDark)  btnDark.addEventListener("click",  () => applyTheme("dark"));
+}
+
+
 
   function initActiveNav() {
   const allNavLinks = () => document.querySelectorAll('.nav-link[href^="#"]');

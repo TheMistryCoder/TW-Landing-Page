@@ -12,6 +12,18 @@
 
 		<!-- Google Fonts -->
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+		<script>
+			(function () {
+				try {
+					var m = localStorage.getItem("theme");
+					if (!m) m = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+					var html = document.documentElement;
+					html.setAttribute("data-theme", m);
+					if (m === "dark") html.classList.add("dark");
+					else html.classList.remove("dark");
+				} catch (e) {}
+			})();
+		</script>
 
 		<!-- Tailwind (CLI build output) -->
 		<link rel="stylesheet" href="dist/output.css" />
@@ -108,7 +120,7 @@
 						<!-- Feature Cards (Updated Minimalist Version) -->
 						<div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6">
 							<!-- Card 1 -->
-							<div class="rounded-xl p-5 bg-green-400/20 border border-white/30 text-white backdrop-blur-sm">
+							<div class="relative rounded-xl p-5 bg-green-400/20 border border-white/30 text-white backdrop-blur-sm">
 								<!-- Dot in top right -->
 								<div class="absolute top-2 right-2 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
 								<div class="flex items-start gap-4">
@@ -125,7 +137,7 @@
 							</div>
 
 							<!-- Card 2 -->
-							<div class="rounded-xl p-5 bg-blue-400/20 border border-white/30 text-white backdrop-blur-sm">
+							<div class="relative rounded-xl p-5 bg-blue-400/20 border border-white/30 text-white backdrop-blur-sm">
 								<!-- Dot in top right -->
 								<div class="absolute top-2 right-2 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
 								<div class="flex items-start gap-4">
@@ -142,7 +154,7 @@
 							</div>
 
 							<!-- Card 3 -->
-							<div class="rounded-xl p-5 bg-yellow-400/20 border border-white/30 text-white backdrop-blur-sm">
+							<div class="relative rounded-xl p-5 bg-yellow-400/20 border border-white/30 text-white backdrop-blur-sm">
 								<!-- Dot in top right -->
 								<div class="absolute top-2 right-2 w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
 								<div class="flex items-start gap-4">
@@ -158,7 +170,7 @@
 								</div>
 							</div>
 							<!-- Card 4 -->
-							<div class="rounded-xl p-5 bg-purple-400/20 border border-white/30 text-white backdrop-blur-sm">
+							<div class="relative rounded-xl p-5 bg-purple-400/20 border border-white/30 text-white backdrop-blur-sm">
 								<!-- Dot in top right -->
 								<div class="absolute top-2 right-2 w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
 								<div class="flex items-start gap-4">
@@ -385,32 +397,55 @@
 
 		<!-- Mobile Slide-out Menu -->
 		<div id="mobile-menu" class="fixed top-0 right-0 h-full w-64 glass-primary text-primary border-l border-primary shadow-lg backdrop-blur transform translate-x-full transition-transform duration-300 z-40 lg:hidden">
-			<div class="flex flex-col p-6 space-y-4 text-sm font-medium dark:text-white">
-				<a href="#top" class="nav-link" aria-current="page">Home</a>
-				<a href="#features" class="nav-link">Features</a>
-				<a href="#benefits" class="nav-link">Benefits</a>
-				<a href="#gallery" class="nav-link">Gallery</a>
-				<a href="#testimonials" class="nav-link">Testimonials</a>
-				<a href="#investment" class="nav-link">Investment</a>
-				<a href="#contact" class="mt-4 bg-slate-900 text-white py-2 px-5 rounded-md hover:bg-slate-700 text-center"> Contact Us </a>
+			<div class="flex flex-col p-6 text-sm font-medium dark:text-white">
+				<!-- Links only get vertical spacing -->
+				<nav class="flex flex-col space-y-8" role="navigation" aria-label="Mobile">
+					<a href="#top" class="nav-link" aria-current="page">Home</a>
+					<a href="#features" class="nav-link">Features</a>
+					<a href="#benefits" class="nav-link">Benefits</a>
+					<a href="#gallery" class="nav-link">Gallery</a>
+					<a href="#testimonials" class="nav-link">Testimonials</a>
+					<a href="#investment" class="nav-link">Investment</a>
+					<!-- <a href="#contact" class="mt-4 bg-slate-900 text-white py-2 px-5 rounded-md hover:bg-slate-700 text-center"> Regiester</a> -->
+				</nav>
+
+				<!-- Divider with comfortable breathing room -->
+				<hr class="my-6 border-slate-300 dark:border-slate-600" />
+
+				<!-- Theme block, closer to the divider -->
+				<div class="mt-2">
+					<div class="mb-3 text-xs font-medium text-slate-700 dark:text-slate-200">Theme Mode:</div>
+
+					<div class="flex items-center gap-4">
+						<!-- Toggle -->
+						<input id="theme-checkbox-mobile" type="checkbox" class="relative w-11 h-6 rounded-full cursor-pointer appearance-none transition-colors bg-slate-300 checked:bg-slate-700 focus-visible:ring-2 focus-visible:ring-slate-500/40 focus-visible:outline-none before:content-[''] before:absolute before:top-1 before:left-1 before:w-4 before:h-4 before:rounded-full before:bg-white before:shadow before:transition-transform checked:before:translate-x-5" />
+
+						<!-- Labels -->
+						<div class="theme-toggle-labels flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+							<button id="theme-light-trigger" type="button" class="label-light flex items-center gap-1 cursor-pointer select-none" aria-label="Switch to light theme">
+								<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+									<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25M17.364 17.364l-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m2.25-4.773L3.659 5.636M12 8.25a3.75 3.75 0 1 1 0 7.5 3.75 3.75 0 0 1 0-7.5z" />
+								</svg>
+								<span>Light</span>
+							</button>
+
+							<span>/</span>
+
+							<button id="theme-dark-trigger" type="button" class="label-dark flex items-center gap-1 cursor-pointer select-none" aria-label="Switch to dark theme">
+								<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+									<path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0 1 12.002 21a9.75 9.75 0 0 1 0-19.5c.34 0 .675.02 1.006.058a9.001 9.001 0 0 0 8.744 13.444z" />
+								</svg>
+								<span>Dark</span>
+							</button>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
 		<!-- Overlay (optional later for blur) -->
 		<div id="menu-overlay" class="fixed inset-0 bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300 z-30"></div>
-		<!-- Theme Icon Templates -->
-		<template id="icon-sun">
-			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-yellow-400">
-				<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
-			</svg>
-		</template>
 
-		<template id="icon-moon">
-			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-slate-900 dark:text-white">
-				<path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
-			</svg>
-		</template>
-
-		<script src="scripts/theme-toggle.js" defer></script>
+		<script src="scripts/theme-toggle.js"></script>
 	</body>
 </html>

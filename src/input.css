@@ -212,6 +212,22 @@ html {
 		transform: rotate(0deg) scale(1);
 		opacity: 1;
 	}
+
+	/* Light active */
+	#theme-checkbox-mobile:not(:checked) ~ .theme-toggle-labels .label-light {
+		@apply text-primary font-semibold opacity-100;
+	}
+	#theme-checkbox-mobile:not(:checked) ~ .theme-toggle-labels .label-dark {
+		@apply opacity-40;
+	}
+
+	/* Dark active */
+	#theme-checkbox-mobile:checked ~ .theme-toggle-labels .label-dark {
+		@apply text-primary font-semibold opacity-100;
+	}
+	#theme-checkbox-mobile:checked ~ .theme-toggle-labels .label-light {
+		@apply opacity-40;
+	}
 }
 
 /* =========================================
