@@ -276,3 +276,197 @@ html {
 	bottom: 0;
 	transform: rotate(-45deg);
 }
+
+/* ========== Gallery Section ========== */
+
+/* ========== Gallery Section ========== */
+/* Layout summary
+   Mobile: image → nav → text (stacked)
+   Desktop: row1 = image | text
+            row2 =  nav   | .     (text stays aligned to image only)
+*/
+
+/* ----- Grid wrapper and areas ----- */
+.gallery-grid {
+	display: grid;
+	grid-template-areas:
+		"image"
+		"nav"
+		"text";
+	row-gap: 3rem; /* breathing room between blocks on mobile */
+}
+
+@media (min-width: 1024px) {
+	.gallery-grid {
+		grid-template-columns: minmax(0, 600px) 1fr;
+		grid-template-rows: auto auto;
+		grid-template-areas:
+			"image text"
+			"nav   .";
+		column-gap: 3rem;
+		align-items: start; /* top align so image never “floats” down */
+	}
+}
+
+/* ----- Left column: image wrapper ----- */
+.gallery-image {
+	grid-area: image;
+	justify-self: center; /* keep the square centred within its column */
+	width: 100%;
+	max-width: 600px;
+}
+
+/* The Embla carousel container (square, rounded, shadow) */
+.gallery-carousel {
+	overflow: hidden;
+	border-radius: 1rem; /* rounded corners */
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+	/* Force a square media box */
+	aspect-ratio: 1 / 1;
+	width: 100%;
+}
+
+/* ----- Embla track and slides ----- */
+.embla__container,
+.gallery-track {
+	/* support either class in HTML */
+	display: flex;
+	height: 100%;
+}
+
+.embla__slide {
+	flex: 0 0 100%; /* one slide visible at a time */
+	height: 100%;
+}
+
+.gallery-slide img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover; /* fill neatly inside the square */
+	border-radius: 1rem; /* match container */
+}
+
+/* ----- Nav row: arrows + dots (under image column only) ----- */
+.gallery-nav {
+	grid-area: nav;
+	justify-self: center; /* width follows image column */
+	width: 100%;
+	max-width: 600px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+}
+
+/* Arrows (theme colours via Tailwind) */
+.gallery-prev,
+.gallery-next {
+	@apply bg-white border border-gray-200 rounded-full;
+	/* keep your sizing/behaviour as-is */
+	width: 2rem;
+	height: 2rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.gallery-prev:hover,
+.gallery-next:hover {
+	@apply bg-gray-200;
+}
+
+/* Dark mode (using your existing data-theme attribute) */
+[data-theme="dark"] .gallery-prev,
+[data-theme="dark"] .gallery-next {
+	@apply bg-gray-700 border-gray-600;
+}
+
+[data-theme="dark"] .gallery-prev:hover,
+[data-theme="dark"] .gallery-next:hover {
+	@apply bg-gray-600;
+}
+
+/* Dots row */
+.gallery-dots {
+	display: flex;
+	justify-content: center;
+	gap: 0.6rem; /* desktop spacing stays tight */
+}
+
+/* Compact clickable area on desktop */
+.gallery-dots button {
+	width: 1rem; /* compact hit area for pointer */
+	height: 1rem;
+	display: grid;
+	place-items: center;
+	border: 0;
+	background: transparent;
+	border-radius: 9999px;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+	touch-action: manipulation;
+	outline: none;
+}
+
+.gallery-dots button:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+}
+
+/* Visual dot */
+.gallery-dots button::before {
+	content: "";
+	width: 0.45rem;
+	height: 0.45rem;
+	border-radius: 9999px;
+	@apply bg-gray-300; /* inactive */
+	transition: transform 0.12s ease, opacity 0.2s ease, background-color 0.2s ease;
+}
+
+/* Active state follows brand colour via .gallery-nav { color } */
+.gallery-dots button.active::before {
+	background: currentColor;
+	transform: scale(1.1);
+}
+
+/* Dark mode visibility */
+[data-theme="dark"] .gallery-dots button::before {
+	opacity: 0.35;
+}
+[data-theme="dark"] .gallery-dots button:hover::before {
+	opacity: 0.7;
+}
+[data-theme="dark"] .gallery-dots button.active::before {
+	opacity: 1;
+}
+
+/* Mobile-only: bigger tap target without changing the dot look too much */
+@media (max-width: 640px) {
+	.gallery-dots {
+		gap: 0.3rem;
+	} /* tighten spacing to offset the larger target */
+	.gallery-dots button {
+		width: 1.75rem; /* ~28px tap target on phones */
+		height: 1.75rem;
+	}
+}
+
+/* ----- Right column: text block ----- */
+.gallery-text {
+	grid-area: text;
+	display: flex;
+	flex-direction: column;
+	justify-content: center; /* align to image height on desktop */
+	height: 100%;
+}
+.gallery-text h3 {
+	margin-bottom: 1rem;
+}
+.gallery-text ul li svg {
+	color: currentColor; /* sync icon with text colour */
+}
