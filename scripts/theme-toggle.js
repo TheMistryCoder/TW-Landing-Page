@@ -1,3 +1,4 @@
+// scripts/theme-toggle.js
 document.addEventListener("DOMContentLoaded", () => {
   // ---------- Shortcuts ----------
   const $  = (s, r = document) => r.querySelector(s);
@@ -94,92 +95,105 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnDark)  btnDark.addEventListener("click",  () => applyTheme("dark"));
   }
 
-  // ---------- NAV: click-to-activate (kept) ----------
+  // ---------- NAV: click-to-activate ----------
+  // Keeps desktop and mobile nav in sync using aria-current="page"
   function initActiveNav() {
     const allNavLinks = () => document.querySelectorAll('.nav-link[href^="#"]');
 
-    allNavLinks().forEach(link => {
-      link.addEventListener('click', () => {
-        const target = link.getAttribute('href'); // e.g. "#features"
-        // Clear previous active
-        allNavLinks().forEach(a => a.removeAttribute('aria-current'));
-        // Set active on BOTH navs for the same target
-        allNavLinks().forEach(a => {
-          if (a.getAttribute('href') === target) {
-            a.setAttribute('aria-current', 'page');
-          }
+    allNavLinks().forEach((link) => {
+      link.addEventListener("click", () => {
+        const target = link.getAttribute("href"); // e.g. "#features"
+        // Clear previous
+        allNavLinks().forEach((a) => a.removeAttribute("aria-current"));
+        // Set on both navs for the same target
+        allNavLinks().forEach((a) => {
+          if (a.getAttribute("href") === target) a.setAttribute("aria-current", "page");
         });
       });
     });
   }
 
-  // ---------- NAV: scroll-spy to keep active state in sync while scrolling ----------
-  function initScrollSpy() {
-    const navLinks = Array.from(document.querySelectorAll('a.nav-link[href^="#"]'));
-    if (!navLinks.length || !("IntersectionObserver" in window)) return;
+  // ---------- NAV: lightweight scroll-spy (uses section tops + header offset) ----------
+function initScrollSpy() {
+  const navLinks = Array.from(document.querySelectorAll('a.nav-link[href^="#"]'));
+  if (!navLinks.length) return;
 
-    // Map id -> NodeList of matching links in both navs
-    const idToLinks = {};
-    const ids = [];
-    for (const a of navLinks) {
-      const hash = a.getAttribute('href') || '';
-      const id = hash.startsWith('#') ? hash.slice(1) : '';
-      if (!id) continue;
-      if (!idToLinks[id]) {
-        idToLinks[id] = document.querySelectorAll(`a.nav-link[href="#${id}"]`);
-        ids.push(id);
-      }
+  // Map: id -> all matching links (desktop + mobile)
+  const idToLinks = {};
+  const sections = [];
+
+  for (const a of navLinks) {
+    const hash = a.getAttribute('href') || '';
+    const id = hash.startsWith('#') ? hash.slice(1) : '';
+    if (!id) continue;
+
+    if (!idToLinks[id]) {
+      idToLinks[id] = document.querySelectorAll(`a.nav-link[href="#${id}"]`);
+      const sec = document.getElementById(id);
+      if (sec) sections.push(sec);
+    }
+  }
+  if (!sections.length) return;
+
+  const header = document.querySelector('header');
+  const topOffset = () => (header?.offsetHeight || 0) + 8;
+
+  let positions = [];     // [{ id, top }]
+  let activeId = null;
+  let raf = null;
+
+  const setActive = (id) => {
+    if (id === activeId) return;
+    navLinks.forEach(a => a.removeAttribute('aria-current'));
+    if (id && idToLinks[id]) idToLinks[id].forEach(a => a.setAttribute('aria-current', 'page'));
+    activeId = id;
+  };
+
+  const recalc = () => {
+    positions = sections
+      .map(sec => ({
+        id: sec.id,
+        top: Math.round(window.pageYOffset + sec.getBoundingClientRect().top)
+      }))
+      .sort((a, b) => a.top - b.top);
+  };
+
+  const tick = () => {
+    raf = null;
+    const pos = window.scrollY + topOffset();
+
+    // pick the last section whose top is above the header line
+    let current = positions[0]?.id || null;
+    for (let i = 0; i < positions.length; i++) {
+      if (pos >= positions[i].top) current = positions[i].id;
+      else break;
     }
 
-    // Existing sections
-    const sections = ids
-      .map(id => document.getElementById(id))
-      .filter(Boolean);
-    if (!sections.length) return;
+    // handle very top of page
+    if (window.scrollY <= topOffset()) {
+      const topId = (idToLinks['home'] && 'home') || (idToLinks['top'] && 'top') || positions[0]?.id;
+      setActive(topId || current);
+    } else {
+      setActive(current);
+    }
+  };
 
-    const header = document.querySelector('header');
-    const topOffset = (header?.offsetHeight || 0) + 8; // cushion for the fixed header
+  const onScroll = () => {
+    if (raf) return;
+    raf = requestAnimationFrame(tick);
+  };
 
-    const setActive = (id) => {
-      navLinks.forEach(a => a.removeAttribute('aria-current'));
-      if (id && idToLinks[id]) {
-        idToLinks[id].forEach(a => a.setAttribute('aria-current', 'page'));
-      }
-    };
+  // boot
+  recalc();
+  // honour hash on load
+  const hash = location.hash && location.hash.startsWith('#') ? location.hash.slice(1) : '';
+  if (hash && idToLinks[hash]) setActive(hash); else tick();
 
-    const maybeActivateTop = () => {
-      const hasTopLink = !!idToLinks["top"];
-      if (hasTopLink && window.scrollY < 100) setActive("top");
-    };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', () => { recalc(); tick(); }, { passive: true });
+  if ('ResizeObserver' in window && header) new ResizeObserver(() => { recalc(); tick(); }).observe(header);
+}
 
-    const io = new IntersectionObserver((entries) => {
-      // Choose the entry nearest to the top that is intersecting
-      let candidate = null;
-      let bestTop = Infinity;
-
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        const rect = entry.target.getBoundingClientRect();
-        const distance = Math.abs(rect.top - topOffset);
-        if (distance < bestTop) {
-          bestTop = distance;
-          candidate = entry.target;
-        }
-      }
-
-      if (candidate) setActive(candidate.id);
-    }, {
-      root: null,
-      rootMargin: `-${topOffset}px 0px -55% 0px`,
-      threshold: 0.25
-    });
-
-    sections.forEach(sec => io.observe(sec));
-
-    // Initial highlight / top-of-page behaviour
-    maybeActivateTop();
-    window.addEventListener('scroll', maybeActivateTop, { passive: true });
-  }
 
   // Initialise features independently
   initMenu();
