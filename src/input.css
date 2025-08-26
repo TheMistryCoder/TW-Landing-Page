@@ -470,3 +470,75 @@ html {
 .gallery-text ul li svg {
 	color: currentColor; /* sync icon with text colour */
 }
+
+/* ================= Partners marquee ================= */
+.partners-marquee {
+	--fade: 6rem; /* edge fade width */
+	--marquee-duration: 20s; /* smaller = faster */
+	--logo-gap: 5rem; /* space between logos */
+
+	position: relative;
+	overflow: hidden;
+	display: flex; /* keep both groups on one row */
+	align-items: center;
+
+	/* left/right fade */
+	-webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--fade), #000 calc(100% - var(--fade)), transparent 100%);
+	mask-image: linear-gradient(to right, transparent 0, #000 var(--fade), #000 calc(100% - var(--fade)), transparent 100%);
+}
+
+/* each group scrolls by its own width */
+.marquee-group {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--logo-gap);
+	margin-right: var(--logo-gap); /* ensures a normal gap at the seam */
+	flex-shrink: 0;
+	min-width: max-content; /* so -100% lands exactly at the edge */
+	will-change: transform;
+	animation: partners-marquee var(--marquee-duration) linear infinite;
+}
+
+/* offset the second group so resets never coincide */
+.marquee-group:nth-child(2) {
+	animation-delay: calc(-1 * var(--marquee-duration));
+}
+
+@keyframes partners-marquee {
+	from {
+		transform: translate3d(0, 0, 0);
+	}
+	to {
+		transform: translate3d(calc(-100% - var(--logo-gap)), 0, 0);
+	}
+}
+
+/* logos */
+.partner-logo {
+	object-fit: contain;
+	flex: 0 0 auto; /* avoid flex squeezing mid-scroll */
+}
+
+/* Light/Dark adaptation for white logos */
+:root[data-theme="light"] .partner-logo {
+	filter: invert(1) brightness(0.5) grayscale(1);
+	opacity: 0.7;
+}
+:root[data-theme="dark"] .partner-logo {
+	filter: none;
+}
+
+/* mobile tweak: slightly smaller fade and spacing if you like */
+@media (max-width: 640px) {
+	.partners-marquee {
+		--fade: 6rem;
+		--logo-gap: 3.5rem;
+	}
+}
+
+/* accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+	.marquee-group {
+		animation: none;
+	}
+}
