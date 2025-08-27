@@ -474,7 +474,7 @@ html {
 /* ================= Partners marquee ================= */
 .partners-marquee {
 	--fade: 6rem; /* edge fade width */
-	--marquee-duration: 20s; /* smaller = faster */
+	--marquee-duration: 24s; /* smaller = faster */
 	--logo-gap: 5rem; /* space between logos */
 
 	position: relative;
