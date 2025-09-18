@@ -95,7 +95,13 @@ html {
 
 	/* ---------- HERO TOP PADDING ---------- */
 	.hero-pad {
-		@apply pt-[calc(5rem+5rem)] pb-20; /* top = navbar (5rem) + baseline (5rem), bottom = baseline */
+		@apply pt-[calc(5rem+2rem)] pb-8; /* smaller top + bottom on mobile */
+	}
+
+	@media (min-width: 640px) {
+		.hero-pad {
+			@apply pt-[calc(5rem+5rem)] pb-20; /* restore your original spacing */
+		}
 	}
 
 	/* Gradient headline text that flips for dark mode */
