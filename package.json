@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "BROWSERSLIST_IGNORE_OLD_DATA=1 pnpm run watch",
     "watch": "pnpm exec tailwindcss --input ./src/input.css --output ./dist/output.css --watch --verbose",
-    "build": "pnpm exec tailwindcss -i ./src/input.css -o ./dist/output.css"
+    "build": "pnpm exec tailwindcss -i ./src/input.css -o ./dist/output.css",
+    "serve": "browser-sync start --server --files 'index.html, dist/output.css, src/**/*.js'"
   },
   "keywords": [],
   "author": "",
